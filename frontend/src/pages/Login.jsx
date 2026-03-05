@@ -5,10 +5,11 @@ import { toast } from "react-toastify";
 
 function Login() {
   const [currentState, setCurrentState] = useState("Login");
-  const { token, setToken, navigate, backendUrl, setUserId } = useContext(ShopContext); // ✅ Add setUserId
+  const { token, setToken, navigate, backendUrl, setUserId } = useContext(ShopContext);
+  
   const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const onSubmitHandler = async (event) => {
@@ -16,106 +17,60 @@ function Login() {
     setLoading(true);
 
     try {
-      console.log("Backend URL from context:", backendUrl); 
-      
-      if (currentState === "Sign up") {
-        const response = await axios.post(backendUrl + "/api/user/register", {
-          name,
-          email,
-          password,
-        });
+      // 1. Determine endpoint based on state
+      const endpoint = currentState === "Login" ? "/api/user/login" : "/api/user/register";
+      const payload = currentState === "Login" ? { email, password } : { name, email, password };
 
-        console.log("Registration response:", response.data); // Debug log
+      const response = await axios.post(backendUrl + endpoint, payload);
 
-        if (response.data.success) {
-          // Store token
-          setToken(response.data.token);
-          localStorage.setItem("token", response.data.token);
-          
-          // ✅ STORE USER ID from response
-          const userId = response.data.userId || response.data.user?._id;
-          if (userId) {
-            localStorage.setItem("userId", userId);
-            if (setUserId) setUserId(userId); // Update context if setUserId exists
-            console.log("Stored userId:", userId);
-          }
-          
-          toast.success("Registration successful!");
-          // navigate("/");
-        } else {
-          toast.error(response.data.message);
-        }
+      if (response.data.success) {
+        const { token, userId, user } = response.data;
+        const finalUserId = userId || user?._id;
+
+        // 2. Update Context
+        setToken(token);
+        if (setUserId && finalUserId) setUserId(finalUserId);
+
+        // 3. Update LocalStorage
+        localStorage.setItem("token", token);
+        if (finalUserId) localStorage.setItem("userId", finalUserId);
+
+        toast.success(`${currentState} successful!`);
       } else {
-        const response = await axios.post(backendUrl + "/api/user/login", {
-          email,
-          password,
-        });
-        
-        console.log("Login response:", response.data); // Debug log
-        
-        if (response.data.success) {
-          // Store token
-          setToken(response.data.token);
-          localStorage.setItem("token", response.data.token);
-          
-          // ✅ STORE USER ID from response
-          const userId = response.data.userId || response.data.user?._id;
-          if (userId) {
-            localStorage.setItem("userId", userId);
-            if (setUserId) setUserId(userId); // Update context if setUserId exists
-            console.log("Stored userId:", userId);
-          } else {
-            console.warn("No userId in response:", response.data);
-          }
-          
-          toast.success("Login successful!");
-          // navigate("/");
-        } else {
-          toast.error(response.data.message);
-        }
+        toast.error(response.data.message);
       }
     } catch (error) {
-      console.error("Login error:", error);
-      
-      if (error.response) {
-        // Server responded with error
-        toast.error(error.response.data?.message || `Error: ${error.response.status}`);
-      } else if (error.request) {
-        // No response received
-        toast.error("Cannot connect to server. Check if backend is running.");
-      } else {
-        // Request setup error
-        toast.error("Something went wrong: " + error.message);
-      }
+      console.error("Auth error:", error);
+      const errorMsg = error.response?.data?.message || "Connection failed. Is the backend running?";
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(()=>{
-   if(token){
-    navigate('/')
-   }
-  },[token])
+  // Redirect if already logged in
+  useEffect(() => {
+    if (token) navigate("/");
+  }, [token, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-[80vh] flex items-center justify-center px-4">
       <form
         onSubmit={onSubmitHandler}
-        className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800"
+        className="flex flex-col items-center w-full max-w-sm gap-4 text-gray-700 bg-white p-8 rounded-xl shadow-sm border border-gray-100"
       >
-        <div className="inline-flex items-center gap-2 mb-2 mt-10">
-          <p className="prata-regular text-3xl">{currentState}</p>
-          <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
+        <div className="flex flex-col items-center gap-2 mb-6">
+          <h2 className="prata-regular text-4xl text-black">{currentState}</h2>
+          <div className="h-1 w-12 bg-black rounded-full" />
         </div>
 
-        {currentState === "Login" ? null : (
+        {currentState !== "Login" && (
           <input
             onChange={(e) => setName(e.target.value)}
             value={name}
             type="text"
-            className="w-full px-3 py-2 border border-gray-800"
-            placeholder="Name"
+            className="w-full px-4 py-3 border border-gray-300 rounded focus:border-black outline-none transition-all"
+            placeholder="Full Name"
             required
           />
         )}
@@ -124,8 +79,8 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           type="email"
-          className="w-full px-3 py-2 border border-gray-800"
-          placeholder="Email"
+          className="w-full px-4 py-3 border border-gray-300 rounded focus:border-black outline-none transition-all"
+          placeholder="Email Address"
           required
         />
 
@@ -133,37 +88,37 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           type="password"
-          className="w-full px-3 py-2 border border-gray-800"
+          className="w-full px-4 py-3 border border-gray-300 rounded focus:border-black outline-none transition-all"
           placeholder="Password"
           required
         />
 
-        <div className="w-full flex justify-between text-sm mt-[-8px]">
-          <p className="cursor-pointer">Forgot your password?</p>
-
+        <div className="w-full flex justify-between text-xs font-medium text-gray-500 mt-[-4px]">
+          <span className="hover:text-black cursor-pointer transition-colors">Forgot password?</span>
           {currentState === "Login" ? (
-            <p
-              onClick={() => setCurrentState("Sign up")}
-              className="cursor-pointer"
-            >
+            <span onClick={() => setCurrentState("Sign up")} className="text-black cursor-pointer underline underline-offset-4">
               Create account
-            </p>
+            </span>
           ) : (
-            <p
-              onClick={() => setCurrentState("Login")}
-              className="cursor-pointer"
-            >
-              Login Here
-            </p>
+            <span onClick={() => setCurrentState("Login")} className="text-black cursor-pointer underline underline-offset-4">
+              Login here
+            </span>
           )}
         </div>
 
         <button 
           type="submit"
           disabled={loading}
-          className="bg-black text-white font-light px-8 py-2 mt-4 disabled:bg-gray-400"
+          className="w-full bg-black text-white font-bold py-3 mt-4 rounded hover:bg-gray-900 active:scale-[0.98] transition-all disabled:bg-gray-400 flex items-center justify-center gap-2"
         >
-          {loading ? "Processing..." : (currentState === "Login" ? "Sign In" : "Sign Up")}
+          {loading ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              Processing...
+            </>
+          ) : (
+            currentState === "Login" ? "Sign In" : "Sign Up"
+          )}
         </button>
       </form>
     </div>
