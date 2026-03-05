@@ -42,57 +42,57 @@ const placeOrderStripe = async (req, res) => {
     const { userId, items, amount, address } = req.body;
     console.log("🔍 REQUEST BODY RECEIVED:", req.body);
     console.log("📦 Extracted fields:", { userId, items, amount, address });
-    
+
     // Validate required fields
     if (!userId) {
-      return res.json({ 
-        success: false, 
-        message: "User ID is required" 
+      return res.json({
+        success: false,
+        message: "User ID is required",
       });
     }
-    
+
     if (!items || items.length === 0) {
-      return res.json({ 
-        success: false, 
-        message: "Cart items are required" 
+      return res.json({
+        success: false,
+        message: "Cart items are required",
       });
     }
-    
+
     if (!amount) {
-      return res.json({ 
-        success: false, 
-        message: "Amount is required" 
+      return res.json({
+        success: false,
+        message: "Amount is required",
       });
     }
-    
+
     if (!address) {
-      return res.json({ 
-        success: false, 
-        message: "Address is required" 
+      return res.json({
+        success: false,
+        message: "Address is required",
       });
     }
-    
+
     // Create the order in database first
     const newOrder = new orderModel({
       userId: userId,
       items: items,
       amount: amount,
       address: address,
-      paymentMethod: 'Stripe',
+      paymentMethod: "Stripe",
       payment: false,
-      date: Date.now()
+      date: Date.now(),
     });
-    
+
     await newOrder.save();
     console.log("✅ Order saved with ID:", newOrder._id);
-    
+
     // Create line items for Stripe
-    const line_items = items.map(item => ({
+    const line_items = items.map((item) => ({
       price_data: {
         currency: currency,
         product_data: {
           name: item.name,
-          description: item.description || '',
+          description: item.description || "",
           images: item.image && item.image.length > 0 ? [item.image[0]] : [],
         },
         unit_amount: Math.round(item.price * 100),
@@ -106,8 +106,8 @@ const placeOrderStripe = async (req, res) => {
         price_data: {
           currency: currency,
           product_data: {
-            name: 'Delivery Charges',
-            description: 'Shipping and handling',
+            name: "Delivery Charges",
+            description: "Shipping and handling",
           },
           unit_amount: deliveryCharges * 100,
         },
@@ -117,18 +117,18 @@ const placeOrderStripe = async (req, res) => {
 
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
+      payment_method_types: ["card"],
       line_items: line_items,
-      mode: 'payment',
+      mode: "payment",
       success_url: `${process.env.FRONTEND_URL}/verify?success=true&orderId=${newOrder._id}`,
       cancel_url: `${process.env.FRONTEND_URL}/verify?success=false&orderId=${newOrder._id}`,
       metadata: {
         orderId: newOrder._id.toString(),
-        userId: userId.toString()
+        userId: userId.toString(),
       },
       customer_email: address.email,
       shipping_address_collection: {
-        allowed_countries: ['US', 'CA', 'GB', 'GH', 'IN'],
+        allowed_countries: ["US", "CA", "GB", "GH", "IN"],
       },
       phone_number_collection: {
         enabled: true,
@@ -137,19 +137,18 @@ const placeOrderStripe = async (req, res) => {
 
     console.log("✅ Stripe session created:", session.id);
     console.log("✅ Stripe session URL:", session.url);
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       message: "Order placed successfully",
       orderId: newOrder._id,
-      session_url: session.url
+      session_url: session.url,
     });
-    
   } catch (error) {
     console.log("❌ Error in placeOrderStripe:", error);
-    res.json({ 
-      success: false, 
-      message: error.message 
+    res.json({
+      success: false,
+      message: error.message,
     });
   }
 };
@@ -158,31 +157,31 @@ const placeOrderStripe = async (req, res) => {
 const verifyStripe = async (req, res) => {
   try {
     const { orderId, success, userId } = req.body;
-    
+
     console.log("🔍 Verifying Stripe payment:", { orderId, success, userId });
-    
+
     if (!orderId) {
       return res.json({ success: false, message: "Order ID is required" });
     }
-    
+
     if (success === "true") {
       const updatedOrder = await orderModel.findByIdAndUpdate(
-        orderId, 
+        orderId,
         { payment: true },
-        { new: true }
+        { new: true },
       );
-      
+
       if (updatedOrder) {
         if (userId) {
           await userModel.findByIdAndUpdate(userId, { cartData: {} });
           console.log("✅ Cart cleared for user:", userId);
         }
-        
+
         console.log("✅ Order payment verified:", updatedOrder._id);
-        res.json({ 
-          success: true, 
+        res.json({
+          success: true,
           message: "Payment verified successfully",
-          order: updatedOrder 
+          order: updatedOrder,
         });
       } else {
         console.log("❌ Order not found:", orderId);
@@ -192,13 +191,15 @@ const verifyStripe = async (req, res) => {
       const deletedOrder = await orderModel.findByIdAndDelete(orderId);
       if (deletedOrder) {
         console.log("❌ Payment failed - order deleted:", orderId);
-        res.json({ success: false, message: "Payment failed - order cancelled" });
+        res.json({
+          success: false,
+          message: "Payment failed - order cancelled",
+        });
       } else {
         console.log("❌ Order not found for deletion:", orderId);
         res.json({ success: false, message: "Order not found" });
       }
     }
-    
   } catch (error) {
     console.log("❌ Error in verifyStripe:", error);
     res.json({ success: false, message: error.message });
@@ -263,8 +264,8 @@ const updateStatus = async (req, res) => {
 export {
   placeOrder,
   placeOrderStripe,
-  allOrders,      // ✅ Now this function exists!
+  allOrders, // ✅ Now this function exists!
   userOrders,
   updateStatus,
-  verifyStripe
+  verifyStripe,
 };

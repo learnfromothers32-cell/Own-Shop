@@ -16,7 +16,7 @@ const adminAuth = async (req, res, next) => {
         message: "Invalid Admin Token",
       });
     }
-    next(); 
+    next();
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });

@@ -96,7 +96,7 @@ const About = () => {
         >
           <div className="rounded-3xl overflow-hidden aspect-[4/5]">
             <motion.img
-              src={assets.about_img}
+              src={assets.about}
               alt="About Forever"
               className="w-full h-full object-cover"
               whileHover={{ scale: 1.04 }}

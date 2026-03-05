@@ -9,14 +9,14 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 const storage = multer.diskStorage({
-    destination: function(req, file, callback) {
-        callback(null, uploadDir);
-    },
-    filename: function(req, file, callback) {
-        // Add timestamp to avoid filename conflicts
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        callback(null, uniqueSuffix + '-' + file.originalname);
-    },
+  destination: function (req, file, callback) {
+    callback(null, uploadDir);
+  },
+  filename: function (req, file, callback) {
+    // Add timestamp to avoid filename conflicts
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    callback(null, uniqueSuffix + "-" + file.originalname);
+  },
 });
 
 const upload = multer({ storage });

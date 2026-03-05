@@ -1,7 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { assets } from "../assets/assets";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 
 const Hero = () => {
   const containerRef = useRef(null);
@@ -12,14 +18,14 @@ const Hero = () => {
   const springY = useSpring(mouseY, { stiffness: 60, damping: 20 });
 
   const { scrollY } = useScroll();
-  const imageY      = useTransform(scrollY, [0, 600], [0, 80]);
-  const textY       = useTransform(scrollY, [0, 600], [0, -40]);
-  const opacity     = useTransform(scrollY, [0, 400], [1, 0]);
+  const imageY = useTransform(scrollY, [0, 600], [0, 80]);
+  const textY = useTransform(scrollY, [0, 600], [0, -40]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
   useEffect(() => {
     const handleMouse = (e) => {
       const { innerWidth, innerHeight } = window;
-      mouseX.set((e.clientX / innerWidth  - 0.5) * 20);
+      mouseX.set((e.clientX / innerWidth - 0.5) * 20);
       mouseY.set((e.clientY / innerHeight - 0.5) * 20);
     };
     window.addEventListener("mousemove", handleMouse);
@@ -31,7 +37,6 @@ const Hero = () => {
       ref={containerRef}
       className="relative w-full min-h-screen bg-[#f8f6f1] overflow-hidden flex flex-col sm:flex-row"
     >
-
       {/* ── Decorative grid overlay ── */}
       <div
         className="absolute inset-0 z-0 pointer-events-none opacity-[0.03]"
@@ -61,7 +66,6 @@ const Hero = () => {
         style={{ y: textY, opacity }}
         className="relative z-10 w-full sm:w-[52%] flex flex-col justify-between py-16 sm:py-24 px-8 md:px-16 xl:px-24"
       >
-
         {/* Top label row */}
         <motion.div
           initial={{ opacity: 0, y: -16 }}
@@ -86,7 +90,12 @@ const Hero = () => {
                 d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
                 fill="none"
               />
-              <text fontSize="13" fontWeight="600" letterSpacing="6" fill="#414141">
+              <text
+                fontSize="13"
+                fontWeight="600"
+                letterSpacing="6"
+                fill="#414141"
+              >
                 <textPath href="#circle">FOREVER • NEW ARRIVALS •</textPath>
               </text>
             </svg>
@@ -95,13 +104,16 @@ const Hero = () => {
 
         {/* Main headline */}
         <div className="flex flex-col gap-0 my-auto pt-12 pb-8">
-
           {/* Serif large headline */}
           <div className="overflow-hidden">
             <motion.p
               initial={{ y: "110%" }}
               animate={{ y: 0 }}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.9,
+                delay: 0.1,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="prata-regular text-[clamp(3.5rem,8vw,7rem)] leading-[0.95] tracking-tight text-[#1a1a1a]"
             >
               The
@@ -111,7 +123,11 @@ const Hero = () => {
             <motion.p
               initial={{ y: "110%" }}
               animate={{ y: 0 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.9,
+                delay: 0.2,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="prata-regular text-[clamp(3.5rem,8vw,7rem)] leading-[0.95] tracking-tight text-[#1a1a1a] italic"
             >
               New
@@ -123,14 +139,18 @@ const Hero = () => {
               transition={{ delay: 0.7, duration: 0.5 }}
               className="hidden sm:flex mb-3 text-[11px] font-bold tracking-[0.2em] uppercase text-white bg-[#1a1a1a] px-3 py-1.5 rounded-full"
             >
-              2025
+              2026
             </motion.span>
           </div>
           <div className="overflow-hidden">
             <motion.p
               initial={{ y: "110%" }}
               animate={{ y: 0 }}
-              transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: 0.9,
+                delay: 0.3,
+                ease: [0.16, 1, 0.3, 1],
+              }}
               className="prata-regular text-[clamp(3.5rem,8vw,7rem)] leading-[0.95] tracking-tight text-[#1a1a1a]"
             >
               Standard.
@@ -144,8 +164,8 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
             className="mt-8 text-sm text-[#414141]/60 leading-relaxed max-w-xs font-light"
           >
-            Timeless silhouettes, premium fabrics, and craftsmanship
-            built to outlast every passing trend.
+            Ergonomic designs, high-impact materials, and industrial-grade
+            protection built to withstand the rigors of your daily grind.
           </motion.p>
 
           {/* CTA row */}
@@ -161,9 +181,7 @@ const Hero = () => {
                 whileTap={{ scale: 0.97 }}
                 className="group relative overflow-hidden bg-[#1a1a1a] text-white text-[11px] font-bold tracking-[0.3em] uppercase px-10 py-4 rounded-full"
               >
-                <motion.span
-                  className="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                />
+                <motion.span className="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <span className="relative">Shop Collection</span>
               </motion.button>
             </Link>
@@ -175,7 +193,11 @@ const Hero = () => {
               <span>Our Story</span>
               <motion.span
                 animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 1.6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               >
                 →
               </motion.span>
@@ -197,8 +219,12 @@ const Hero = () => {
           ].map(({ value, label }, i) => (
             <React.Fragment key={label}>
               <div className="flex-1 text-center first:text-left last:text-right">
-                <p className="text-xl sm:text-2xl font-bold text-[#1a1a1a]">{value}</p>
-                <p className="text-[10px] text-[#414141]/40 tracking-[0.25em] uppercase mt-0.5">{label}</p>
+                <p className="text-xl sm:text-2xl font-bold text-[#1a1a1a]">
+                  {value}
+                </p>
+                <p className="text-[10px] text-[#414141]/40 tracking-[0.25em] uppercase mt-0.5">
+                  {label}
+                </p>
               </div>
               {i < 2 && <div className="w-px h-8 bg-[#1a1a1a]/10" />}
             </React.Fragment>
@@ -217,11 +243,15 @@ const Hero = () => {
       >
         {/* Parallax image */}
         <motion.div
-          style={{ y: imageY, x: springX, rotateY: useTransform(springX, [-10, 10], [-1, 1]) }}
+          style={{
+            y: imageY,
+            x: springX,
+            rotateY: useTransform(springX, [-10, 10], [-1, 1]),
+          }}
           className="absolute inset-[-5%] w-[110%] h-[110%]"
         >
           <img
-            src={assets.hero_img}
+            src={assets.Hero}
             alt="Latest Arrivals"
             className="w-full h-full object-cover object-top"
           />
@@ -250,18 +280,31 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.7, delay: 1.2, type: "spring", stiffness: 200, damping: 20 }}
+          transition={{
+            duration: 0.7,
+            delay: 1.2,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+          }}
           style={{ x: springX, y: useTransform(springY, (v) => v * 0.5) }}
           className="absolute bottom-8 left-8 z-20 bg-white/10 backdrop-blur-xl border border-white/20 px-5 py-4 rounded-2xl shadow-2xl"
         >
           <div className="flex items-center gap-3">
             <div className="flex -space-x-2">
-              {["bg-violet-300", "bg-amber-300", "bg-emerald-300"].map((c, i) => (
-                <div key={i} className={`w-7 h-7 rounded-full ${c} border-2 border-white/30`} />
-              ))}
+              {["bg-violet-300", "bg-amber-300", "bg-emerald-300"].map(
+                (c, i) => (
+                  <div
+                    key={i}
+                    className={`w-7 h-7 rounded-full ${c} border-2 border-white/30`}
+                  />
+                ),
+              )}
             </div>
             <div>
-              <p className="text-white text-xs font-bold leading-tight">+2,300 sold</p>
+              <p className="text-white text-xs font-bold leading-tight">
+                +2,300 sold
+              </p>
               <p className="text-white/50 text-[10px]">this week alone</p>
             </div>
           </div>
@@ -276,7 +319,7 @@ const Hero = () => {
           style={{ writingMode: "vertical-rl" }}
         >
           <span className="text-[9px] font-bold tracking-[0.5em] uppercase text-white/30">
-            Forever — Collection 2025
+            Forever — Collection 2026
           </span>
         </motion.div>
 
@@ -294,10 +337,11 @@ const Hero = () => {
           >
             <div className="w-1 h-1.5 rounded-full bg-white/60" />
           </motion.div>
-          <span className="text-[9px] tracking-[0.3em] uppercase text-white/30 font-medium">Scroll</span>
+          <span className="text-[9px] tracking-[0.3em] uppercase text-white/30 font-medium">
+            Scroll
+          </span>
         </motion.div>
       </motion.div>
-
     </section>
   );
 };

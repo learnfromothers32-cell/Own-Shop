@@ -4,11 +4,9 @@ import validator from "validator";
 import jwt from "jsonwebtoken";
 
 const createToken = (id) => {
-  // Add expiresIn here
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' }); // Token expires in 7 days
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
 
-// Routes for user login
 // Routes for user login
 const loginUser = async (req, res) => {
   try {
@@ -22,17 +20,16 @@ const loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
       const token = createToken(user._id);
-      
-      // ✅ FIX: Include userId in the response
-      res.json({ 
-        success: true, 
+
+      res.json({
+        success: true,
         token,
-        userId: user._id,  // Send the userId to frontend
-        user: {             // Optional: send user details if needed
+        userId: user._id,
+        user: {
           _id: user._id,
           name: user.name,
-          email: user.email
-        }
+          email: user.email,
+        },
       });
     } else {
       res.json({ success: false, message: "Invalid Credentials" });
@@ -43,7 +40,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-// Routes for user register
 // Routes for user register
 const registerUser = async (req, res) => {
   try {
@@ -58,7 +54,10 @@ const registerUser = async (req, res) => {
 
     // validating Email format and strong password
     if (!validator.isEmail(email)) {
-      return res.json({ success: false, message: "Please enter a valid email" });
+      return res.json({
+        success: false,
+        message: "Please enter a valid email",
+      });
     }
     if (password.length < 8) {
       return res.json({
@@ -81,15 +80,15 @@ const registerUser = async (req, res) => {
     const token = createToken(user._id);
 
     // ✅ FIX: Include userId in the response
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       token,
-      userId: user._id,  // Send the userId to frontend
-      user: {             // Optional: send user details
+      userId: user._id,
+      user: {
         _id: user._id,
         name: user.name,
-        email: user.email
-      }
+        email: user.email,
+      },
     });
   } catch (error) {
     console.log(error);
@@ -107,7 +106,9 @@ const adminLogin = async (req, res) => {
       email === process.env.ADMIN_EMAIL &&
       password === process.env.ADMIN_PASSWORD
     ) {
-      const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+        expiresIn: "7d",
+      });
       res.json({ success: true, token });
     } else {
       res.json({ success: false, message: "Invalid credentials" });

@@ -19,9 +19,7 @@ orderRouter.post("/status", adminAuth, updateStatus);
 // Payment Features
 orderRouter.post("/place", authUser, placeOrder);
 orderRouter.post("/stripe", authUser, placeOrderStripe);
-orderRouter.post("/verifyStripe", authUser, verifyStripe);  // ✅ Keep as verifyStripe (camelCase)
-
+orderRouter.post("/verifyStripe", authUser, verifyStripe);
 // User Features
-orderRouter.post("/userOrders", authUser, userOrders);  // ✅ Change from "/userorders" to "/userOrders"
-
+orderRouter.post("/userOrders", authUser, userOrders); 
 export default orderRouter;

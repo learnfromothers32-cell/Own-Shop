@@ -4,25 +4,25 @@ import userModel from "../models/userModel.js";
 const addToCart = async (req, res) => {
   try {
     const { userId, itemId, size } = req.body;
-    
+
     // Validate required fields
     if (!userId || !itemId || !size) {
-      return res.json({ 
-        success: false, 
-        message: "Missing required fields" 
+      return res.json({
+        success: false,
+        message: "Missing required fields",
       });
     }
-    
+
     const userData = await userModel.findById(userId);
-    
+
     // Check if user exists
     if (!userData) {
-      return res.json({ 
-        success: false, 
-        message: "User not found" 
+      return res.json({
+        success: false,
+        message: "User not found",
       });
     }
-    
+
     // Initialize cartData if it doesn't exist
     let cartData = userData.cartData || {};
 
@@ -38,13 +38,9 @@ const addToCart = async (req, res) => {
       cartData[itemId][size] = 1;
     }
 
-    await userModel.findByIdAndUpdate(
-      userId, 
-      { cartData: cartData }
-    );
-    
+    await userModel.findByIdAndUpdate(userId, { cartData: cartData });
+
     res.json({ success: true, message: "Added to cart" });
-    
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -63,7 +59,7 @@ const updateCart = async (req, res) => {
     await userModel.findByIdAndUpdate(userId, { cartData });
     res.json({ success: true, message: "Cart updated" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.json({ success: false, message: error.message });
   }
 };
@@ -72,32 +68,31 @@ const updateCart = async (req, res) => {
 const getUserCart = async (req, res) => {
   try {
     const { userId } = req.body;
-    
+
     // Validate userId
     if (!userId) {
-      return res.json({ 
-        success: false, 
-        message: "User ID is required" 
+      return res.json({
+        success: false,
+        message: "User ID is required",
       });
     }
-    
+
     const userData = await userModel.findById(userId);
-    
+
     // Check if user exists
     if (!userData) {
-      return res.json({ 
-        success: false, 
-        message: "User not found" 
+      return res.json({
+        success: false,
+        message: "User not found",
       });
     }
-    
+
     let cartData = userData.cartData || {};
-    
-    res.json({ 
-      success: true, 
-      cartData: cartData 
+
+    res.json({
+      success: true,
+      cartData: cartData,
     });
-    
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
