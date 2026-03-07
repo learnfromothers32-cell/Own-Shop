@@ -8,55 +8,160 @@ import { motion, AnimatePresence } from "framer-motion";
 /* ── Inline icons ── */
 const Icons = {
   package: (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-.375c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v.375c0 .621.504 1.125 1.125 1.125z" />
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-.375c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v.375c0 .621.504 1.125 1.125 1.125z"
+      />
     </svg>
   ),
   check: (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+    <svg
+      className="w-3 h-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4.5 12.75l6 6 9-13.5"
+      />
     </svg>
   ),
   clock: (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <svg
+      className="w-3 h-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
     </svg>
   ),
   truck: (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+    <svg
+      className="w-3 h-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"
+      />
     </svg>
   ),
   refresh: (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+      />
     </svg>
   ),
   calendar: (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+    <svg
+      className="w-3 h-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+      />
     </svg>
   ),
   creditCard: (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+    <svg
+      className="w-3 h-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
+      />
     </svg>
   ),
   emptyBox: (
-    <svg className="w-10 h-10 text-gray-200" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-.375c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v.375c0 .621.504 1.125 1.125 1.125z" />
+    <svg
+      className="w-10 h-10 text-gray-200"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-.375c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v.375c0 .621.504 1.125 1.125 1.125z"
+      />
     </svg>
   ),
 };
 
 /* ── Status config ── */
 const statusConfig = {
-  Delivered:      { dot: "bg-green-500",  text: "text-green-700",  bg: "bg-green-50",  border: "border-green-100", icon: Icons.check,  label: "Delivered"      },
-  "Out for Delivery": { dot: "bg-blue-500", text: "text-blue-700", bg: "bg-blue-50",   border: "border-blue-100",  icon: Icons.truck,  label: "Out for Delivery" },
-  default:        { dot: "bg-amber-400",  text: "text-amber-700", bg: "bg-amber-50",  border: "border-amber-100", icon: Icons.clock,  label: "In Progress"    },
+  Delivered: {
+    dot: "bg-green-500",
+    text: "text-green-700",
+    bg: "bg-green-50",
+    border: "border-green-100",
+    icon: Icons.check,
+    label: "Delivered",
+  },
+  "Out for Delivery": {
+    dot: "bg-blue-500",
+    text: "text-blue-700",
+    bg: "bg-blue-50",
+    border: "border-blue-100",
+    icon: Icons.truck,
+    label: "Out for Delivery",
+  },
+  default: {
+    dot: "bg-amber-400",
+    text: "text-amber-700",
+    bg: "bg-amber-50",
+    border: "border-amber-100",
+    icon: Icons.clock,
+    label: "In Progress",
+  },
 };
 
-const getStatus = (status) => statusConfig[status] || { ...statusConfig.default, label: status || "Ready to Ship" };
+const getStatus = (status) =>
+  statusConfig[status] || {
+    ...statusConfig.default,
+    label: status || "Ready to Ship",
+  };
 
 /* ── Variants ── */
 const containerVariants = {
@@ -65,16 +170,20 @@ const containerVariants = {
 };
 
 const rowVariants = {
-  hidden:  { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] } },
-  exit:    { opacity: 0, x: -16, transition: { duration: 0.2 } },
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
+  },
+  exit: { opacity: 0, x: -16, transition: { duration: 0.2 } },
 };
 
 /* ── Orders ── */
 const Orders = () => {
   const { backendUrl, token, currency } = useContext(ShopContext);
   const [orderData, setOrderData] = useState([]);
-  const [loading, setLoading]     = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const loadOrderData = async () => {
     try {
@@ -89,10 +198,10 @@ const Orders = () => {
         let allOrdersItems = [];
         response.data.orders.map((order) => {
           order.items.map((item) => {
-            item["status"]        = order.status;
-            item["payment"]       = order.payment;
+            item["status"] = order.status;
+            item["payment"] = order.payment;
             item["paymentMethod"] = order.paymentMethod;
-            item["date"]          = order.date;
+            item["date"] = order.date;
             allOrdersItems.push(item);
           });
         });
@@ -108,11 +217,12 @@ const Orders = () => {
     }
   };
 
-  useEffect(() => { loadOrderData(); }, [token]);
+  useEffect(() => {
+    loadOrderData();
+  }, [token]);
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 sm:px-8 pt-16 pb-20">
-
       {/* ── Header ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -122,9 +232,21 @@ const Orders = () => {
       >
         {/* Breadcrumb */}
         <div className="flex items-center gap-1.5 text-[10px] text-gray-400 tracking-wide mb-3">
-          <span className="hover:text-gray-600 cursor-pointer transition-colors">Home</span>
-          <svg className="w-3 h-3 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          <span className="hover:text-gray-600 cursor-pointer transition-colors">
+            Home
+          </span>
+          <svg
+            className="w-3 h-3 text-gray-300"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 5l7 7-7 7"
+            />
           </svg>
           <span className="font-semibold text-gray-600">My Orders</span>
         </div>
@@ -158,8 +280,12 @@ const Orders = () => {
                 className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-gray-50 border border-gray-100"
               >
                 <span className="text-gray-400">{Icons.package}</span>
-                <span className="text-[10px] text-gray-400 tracking-wide uppercase font-medium">Orders</span>
-                <span className="text-sm font-black text-[#1a1a1a] tabular-nums">{orderData.length}</span>
+                <span className="text-[10px] text-gray-400 tracking-wide uppercase font-medium">
+                  Orders
+                </span>
+                <span className="text-sm font-black text-[#1a1a1a] tabular-nums">
+                  {orderData.length}
+                </span>
               </motion.div>
             </AnimatePresence>
 
@@ -172,7 +298,11 @@ const Orders = () => {
             >
               <motion.span
                 animate={loading ? { rotate: 360 } : { rotate: 0 }}
-                transition={loading ? { duration: 1, repeat: Infinity, ease: "linear" } : {}}
+                transition={
+                  loading
+                    ? { duration: 1, repeat: Infinity, ease: "linear" }
+                    : {}
+                }
               >
                 {Icons.refresh}
               </motion.span>
@@ -184,7 +314,6 @@ const Orders = () => {
 
       {/* ── Body ── */}
       <AnimatePresence mode="wait">
-
         {/* Loading */}
         {loading && (
           <motion.div
@@ -226,7 +355,9 @@ const Orders = () => {
               {Icons.emptyBox}
             </motion.div>
             <div>
-              <p className="text-sm font-semibold text-gray-700 mb-1">No orders yet</p>
+              <p className="text-sm font-semibold text-gray-700 mb-1">
+                No orders yet
+              </p>
               <p className="text-xs text-gray-400 max-w-[200px] leading-relaxed">
                 When you place an order, it'll appear here.
               </p>
@@ -281,7 +412,8 @@ const Orders = () => {
                       {/* Meta chips */}
                       <div className="flex flex-wrap items-center gap-2 mb-2.5">
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-100 text-[10px] font-semibold text-gray-600 tracking-wide">
-                          {currency}{item.price}
+                          {currency}
+                          {item.price}
                         </span>
                         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-100 text-[10px] font-semibold text-gray-600 tracking-wide">
                           Qty {item.quantity}
@@ -297,13 +429,17 @@ const Orders = () => {
                       <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-400">
                         <span className="flex items-center gap-1">
                           {Icons.calendar}
-                          {item.date ? new Date(item.date).toDateString() : "25 Jul 2026"}
+                          {item.date
+                            ? new Date(item.date).toDateString()
+                            : "25 Jul 2026"}
                         </span>
                         <span className="w-px h-3 bg-gray-200" />
                         <span className="flex items-center gap-1">
                           {Icons.creditCard}
                           {item.paymentMethod}
-                          <span className={`ml-1 font-semibold ${item.payment ? "text-green-600" : "text-amber-500"}`}>
+                          <span
+                            className={`ml-1 font-semibold ${item.payment ? "text-green-600" : "text-amber-500"}`}
+                          >
                             · {item.payment ? "Paid" : "Pending"}
                           </span>
                         </span>
@@ -314,8 +450,12 @@ const Orders = () => {
                   {/* Right — status + action */}
                   <div className="flex items-center justify-between md:justify-end gap-4 md:w-auto shrink-0">
                     {/* Status badge */}
-                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] font-semibold tracking-wide ${s.bg} ${s.border} ${s.text}`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${s.dot} shrink-0`} />
+                    <div
+                      className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] font-semibold tracking-wide ${s.bg} ${s.border} ${s.text}`}
+                    >
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full ${s.dot} shrink-0`}
+                      />
                       {s.label}
                     </div>
 
@@ -345,7 +485,9 @@ const Orders = () => {
             >
               <p className="text-xs text-gray-400 tracking-wide">
                 Showing all{" "}
-                <span className="font-semibold text-gray-700 tabular-nums">{orderData.length}</span>{" "}
+                <span className="font-semibold text-gray-700 tabular-nums">
+                  {orderData.length}
+                </span>{" "}
                 order{orderData.length !== 1 ? "s" : ""}
               </p>
               <motion.button

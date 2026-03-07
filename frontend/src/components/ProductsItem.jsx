@@ -7,6 +7,7 @@ function ProductsItem({ id, image, name, price }) {
   const { currency } = useContext(ShopContext);
 
   return (
+    
     <div>
       <Link to={`/product/${id}`} className="text-gray-700 cursor-pointer">
         <div className="overflow-hidden">
@@ -23,7 +24,6 @@ function ProductsItem({ id, image, name, price }) {
         </p>
       </Link>
     </div>
-    
   );
 }
 

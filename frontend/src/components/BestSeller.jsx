@@ -7,15 +7,17 @@ import ProductsItem from "./ProductsItem";
 const RANKS = ["#1 Pick", "#2", "#3", "#4", "#5"];
 
 const proofStats = [
-  { value: "98%",  label: "Recommend" },
-  { value: "12k+", label: "Reviews"   },
-  { value: "#1",   label: "Trending"  },
+  { value: "98%", label: "Recommend" },
+  { value: "12k+", label: "Reviews" },
+  { value: "#1", label: "Trending" },
 ];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40, scale: 0.97 },
   visible: (i = 0) => ({
-    opacity: 1, y: 0, scale: 1,
+    opacity: 1,
+    y: 0,
+    scale: 1,
     transition: { duration: 0.65, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] },
   }),
 };
@@ -23,7 +25,7 @@ const fadeUp = {
 function BestSeller() {
   const { products } = useContext(ShopContext);
   const [bestSeller, setBestSeller] = useState([]);
-  const [hovered, setHovered]       = useState(null);
+  const [hovered, setHovered] = useState(null);
 
   useEffect(() => {
     const best = products.filter((item) => item.bestSeller);
@@ -34,7 +36,6 @@ function BestSeller() {
 
   return (
     <section className="relative w-full overflow-hidden bg-[#fafaf8]">
-
       {/* ── Dot-grid texture ── */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.025] z-0"
@@ -49,10 +50,8 @@ function BestSeller() {
       <div className="absolute bottom-0 left-0  w-[500px] h-[500px] bg-amber-300/4 rounded-full blur-[110px] pointer-events-none z-0" />
 
       <div className="relative z-10 max-w-screen-xl mx-auto px-6 lg:px-12 xl:px-20 py-28">
-
         {/* ── Section header ── */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
-
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -96,9 +95,16 @@ function BestSeller() {
             className="flex items-stretch divide-x divide-gray-100 rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden self-start"
           >
             {proofStats.map(({ value, label }) => (
-              <div key={label} className="flex flex-col items-center justify-center px-6 py-4 gap-0.5">
-                <p className="text-lg sm:text-xl font-bold text-[#1a1a1a]">{value}</p>
-                <p className="text-[9px] tracking-[0.25em] uppercase text-gray-400">{label}</p>
+              <div
+                key={label}
+                className="flex flex-col items-center justify-center px-6 py-4 gap-0.5"
+              >
+                <p className="text-lg sm:text-xl font-bold text-[#1a1a1a]">
+                  {value}
+                </p>
+                <p className="text-[9px] tracking-[0.25em] uppercase text-gray-400">
+                  {label}
+                </p>
               </div>
             ))}
           </motion.div>
@@ -116,16 +122,27 @@ function BestSeller() {
             transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
             className="flex whitespace-nowrap w-max"
           >
-            {Array(4).fill(null).map((_, i) => (
-              <span key={i} className="flex items-center">
-                {["Best Sellers", "Spring 2025", "12k+ Reviews", "As Seen On", "Customer Favourites", "Flying Off Shelves"].map((t) => (
-                  <span key={t} className="flex items-center gap-6 px-8">
-                    <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#414141]/30">{t}</span>
-                    <span className="text-amber-400/50 text-xs">◆</span>
-                  </span>
-                ))}
-              </span>
-            ))}
+            {Array(4)
+              .fill(null)
+              .map((_, i) => (
+                <span key={i} className="flex items-center">
+                  {[
+                    "Best Sellers",
+                    "Spring 2025",
+                    "12k+ Reviews",
+                    "As Seen On",
+                    "Customer Favourites",
+                    "Flying Off Shelves",
+                  ].map((t) => (
+                    <span key={t} className="flex items-center gap-6 px-8">
+                      <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#414141]/30">
+                        {t}
+                      </span>
+                      <span className="text-amber-400/50 text-xs">◆</span>
+                    </span>
+                  ))}
+                </span>
+              ))}
           </motion.div>
         </motion.div>
 
@@ -136,7 +153,6 @@ function BestSeller() {
         ══════════════════════════════════════ */}
         {bestSeller.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.72fr] gap-5">
-
             {/* ── #1 HERO CARD ── */}
             <motion.div
               custom={0}
@@ -163,12 +179,16 @@ function BestSeller() {
               <div className="relative z-10 flex flex-col h-full">
                 {/* Image wrapper — taller on desktop */}
                 <div className="relative rounded-2xl overflow-hidden bg-gray-100 aspect-[3/4] lg:aspect-auto lg:flex-1">
-
                   {/* Rank badge */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.7 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.6, type: "spring", stiffness: 380, damping: 22 }}
+                    transition={{
+                      delay: 0.6,
+                      type: "spring",
+                      stiffness: 380,
+                      damping: 22,
+                    }}
                     className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-amber-500 text-white text-[10px] font-black tracking-[0.2em] uppercase px-3.5 py-1.5 rounded-full shadow-lg shadow-amber-500/30"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" />
@@ -183,7 +203,9 @@ function BestSeller() {
                   {hero && (
                     <Link to={`/product/${hero._id}`}>
                       <motion.img
-                        src={Array.isArray(hero.image) ? hero.image[0] : hero.image}
+                        src={
+                          Array.isArray(hero.image) ? hero.image[0] : hero.image
+                        }
                         alt={hero.name}
                         className="w-full h-full object-cover object-top"
                         whileHover={{ scale: 1.04 }}
@@ -206,14 +228,22 @@ function BestSeller() {
                       </p>
                       <div className="flex items-center justify-between mt-2">
                         <p className="text-white font-bold text-lg">
-                          {hero.currency}{hero.price}
+                          {hero.currency}
+                          {hero.price}
                         </p>
                         <div className="flex items-center gap-0.5">
-                          {Array(5).fill(null).map((_, i) => (
-                            <svg key={i} className="w-3 h-3 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                          ))}
+                          {Array(5)
+                            .fill(null)
+                            .map((_, i) => (
+                              <svg
+                                key={i}
+                                className="w-3 h-3 text-amber-400"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                            ))}
                         </div>
                       </div>
                     </div>
@@ -253,7 +283,12 @@ function BestSeller() {
                     <motion.div
                       initial={{ opacity: 0, scale: 0.7, y: -6 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
-                      transition={{ delay: (i + 1) * 0.1 + 0.5, type: "spring", stiffness: 380, damping: 22 }}
+                      transition={{
+                        delay: (i + 1) * 0.1 + 0.5,
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 22,
+                      }}
                       className="absolute -top-2 -left-2 z-20 text-[9px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-full shadow-md pointer-events-none bg-[#1a1a1a] text-white"
                     >
                       {RANKS[i + 1]}
@@ -309,8 +344,14 @@ function BestSeller() {
                 <motion.span
                   className="relative"
                   animate={{ x: [0, 4, 0] }}
-                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                >→</motion.span>
+                  transition={{
+                    duration: 1.6,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  →
+                </motion.span>
               </motion.button>
             </Link>
 
@@ -325,7 +366,6 @@ function BestSeller() {
             </Link>
           </div>
         </motion.div>
-
       </div>
     </section>
   );

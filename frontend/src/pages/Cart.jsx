@@ -8,38 +8,96 @@ import { motion, AnimatePresence } from "framer-motion";
 /* ── Inline icons ── */
 const Icons = {
   chevronRight: (
-    <svg className="w-3 h-3 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+    <svg
+      className="w-3 h-3 text-gray-300"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      viewBox="0 0 24 24"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
     </svg>
   ),
   cart: (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+      />
     </svg>
   ),
   trash: (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+      />
     </svg>
   ),
   minus: (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+    <svg
+      className="w-3 h-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      viewBox="0 0 24 24"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
     </svg>
   ),
   plus: (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+    <svg
+      className="w-3 h-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      viewBox="0 0 24 24"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
     </svg>
   ),
   arrowRight: (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M17 8l4 4m0 0l-4 4m4-4H3"
+      />
     </svg>
   ),
   emptyCart: (
-    <svg className="w-10 h-10 text-gray-200" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+    <svg
+      className="w-10 h-10 text-gray-200"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+      />
     </svg>
   ),
 };
@@ -51,13 +109,23 @@ const containerVariants = {
 };
 
 const rowVariants = {
-  hidden:  { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] } },
-  exit:    { opacity: 0, x: -20, scale: 0.97, transition: { duration: 0.25, ease: [0.33, 1, 0.68, 1] } },
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
+  },
+  exit: {
+    opacity: 0,
+    x: -20,
+    scale: 0.97,
+    transition: { duration: 0.25, ease: [0.33, 1, 0.68, 1] },
+  },
 };
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity, navigate } =
+    useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
@@ -65,7 +133,11 @@ const Cart = () => {
     for (const items in cartItems) {
       for (const item in cartItems[items]) {
         if (cartItems[items][item] > 0) {
-          tempData.push({ _id: items, size: item, quantity: cartItems[items][item] });
+          tempData.push({
+            _id: items,
+            size: item,
+            quantity: cartItems[items][item],
+          });
         }
       }
     }
@@ -76,7 +148,6 @@ const Cart = () => {
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 sm:px-8 pt-14 pb-20">
-
       {/* ── Header ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -86,9 +157,13 @@ const Cart = () => {
       >
         {/* Breadcrumb */}
         <div className="flex items-center gap-1.5 text-[10px] text-gray-400 tracking-wide mb-3">
-          <span className="hover:text-gray-600 cursor-pointer transition-colors">Home</span>
+          <span className="hover:text-gray-600 cursor-pointer transition-colors">
+            Home
+          </span>
           {Icons.chevronRight}
-          <span className="hover:text-gray-600 cursor-pointer transition-colors">Shop</span>
+          <span className="hover:text-gray-600 cursor-pointer transition-colors">
+            Shop
+          </span>
           {Icons.chevronRight}
           <span className="font-semibold text-gray-600">Cart</span>
         </div>
@@ -121,8 +196,12 @@ const Cart = () => {
               className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-gray-50 border border-gray-100 mb-1"
             >
               <span className="text-gray-400">{Icons.cart}</span>
-              <span className="text-[10px] text-gray-400 tracking-wide uppercase font-medium">Items</span>
-              <span className="text-sm font-black text-[#1a1a1a] tabular-nums">{totalItems}</span>
+              <span className="text-[10px] text-gray-400 tracking-wide uppercase font-medium">
+                Items
+              </span>
+              <span className="text-sm font-black text-[#1a1a1a] tabular-nums">
+                {totalItems}
+              </span>
             </motion.div>
           </AnimatePresence>
         </div>
@@ -130,7 +209,6 @@ const Cart = () => {
 
       {/* ── Cart rows ── */}
       <AnimatePresence mode="wait">
-
         {/* Empty state */}
         {cartData.length === 0 && (
           <motion.div
@@ -149,7 +227,9 @@ const Cart = () => {
               {Icons.emptyCart}
             </motion.div>
             <div>
-              <p className="text-sm font-semibold text-gray-700 mb-1">Your cart is empty</p>
+              <p className="text-sm font-semibold text-gray-700 mb-1">
+                Your cart is empty
+              </p>
               <p className="text-xs text-gray-400 max-w-[200px] leading-relaxed">
                 Add items from the collection to get started.
               </p>
@@ -202,7 +282,10 @@ const Cart = () => {
                           className="absolute top-0 left-0 right-0 h-[1.5px] bg-[#1a1a1a] origin-left rounded-t-xl pointer-events-none"
                           initial={{ scaleX: 0 }}
                           whileHover={{ scaleX: 1 }}
-                          transition={{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }}
+                          transition={{
+                            duration: 0.3,
+                            ease: [0.33, 1, 0.68, 1],
+                          }}
                         />
                       </div>
 
@@ -214,7 +297,8 @@ const Cart = () => {
                         {/* Meta chips */}
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-gray-100 text-[10px] font-semibold text-gray-600 tracking-wide">
-                            {currency}{productData?.price}
+                            {currency}
+                            {productData?.price}
                           </span>
                           <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-gray-100 text-[10px] font-semibold text-gray-600 tracking-wide uppercase">
                             Size: {item.size}
@@ -225,12 +309,17 @@ const Cart = () => {
 
                     {/* Right — qty + delete */}
                     <div className="flex items-center gap-3 shrink-0">
-
                       {/* Quantity stepper */}
                       <div className="flex items-center gap-1 border border-gray-200 rounded-full px-1 py-1">
                         <motion.button
                           whileTap={{ scale: 0.85 }}
-                          onClick={() => updateQuantity(item._id, item.size, Math.max(1, item.quantity - 1))}
+                          onClick={() =>
+                            updateQuantity(
+                              item._id,
+                              item.size,
+                              Math.max(1, item.quantity - 1),
+                            )
+                          }
                           className="w-6 h-6 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-[#1a1a1a] transition-colors"
                         >
                           {Icons.minus}
@@ -242,7 +331,11 @@ const Cart = () => {
                             if (value === "" || value === "0") {
                               updateQuantity(item._id, item.size, 0);
                             } else {
-                              updateQuantity(item._id, item.size, Number(value));
+                              updateQuantity(
+                                item._id,
+                                item.size,
+                                Number(value),
+                              );
                             }
                           }}
                           className="w-8 text-center text-xs font-bold text-[#1a1a1a] bg-transparent border-none outline-none tabular-nums"
@@ -253,7 +346,13 @@ const Cart = () => {
 
                         <motion.button
                           whileTap={{ scale: 0.85 }}
-                          onClick={() => updateQuantity(item._id, item.size, item.quantity + 1)}
+                          onClick={() =>
+                            updateQuantity(
+                              item._id,
+                              item.size,
+                              item.quantity + 1,
+                            )
+                          }
                           className="w-6 h-6 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-[#1a1a1a] transition-colors"
                         >
                           {Icons.plus}
@@ -280,11 +379,14 @@ const Cart = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
+              transition={{
+                delay: 0.35,
+                duration: 0.5,
+                ease: [0.33, 1, 0.68, 1],
+              }}
               className="flex justify-end mt-16"
             >
               <div className="w-full sm:w-[450px]">
-
                 {/* Summary header */}
                 <div className="flex items-center gap-3 mb-5">
                   <div className="h-[1.5px] w-8 bg-[#414141]" />
@@ -303,9 +405,7 @@ const Cart = () => {
                     className="group w-full flex items-center justify-center gap-3 bg-[#1a1a1a] text-white text-[11px] font-semibold tracking-[0.25em] uppercase py-4 rounded-full transition-colors duration-200"
                   >
                     Proceed to Checkout
-                    <motion.span
-                      className="transition-transform duration-200 group-hover:translate-x-1"
-                    >
+                    <motion.span className="transition-transform duration-200 group-hover:translate-x-1">
                       {Icons.arrowRight}
                     </motion.span>
                   </motion.button>
@@ -325,9 +425,13 @@ const Cart = () => {
               className="mt-10 pt-6 border-t border-gray-100 flex items-center justify-between flex-wrap gap-4"
             >
               <p className="text-xs text-gray-400 tracking-wide">
-                <span className="font-semibold text-gray-700 tabular-nums">{cartData.length}</span>{" "}
+                <span className="font-semibold text-gray-700 tabular-nums">
+                  {cartData.length}
+                </span>{" "}
                 product{cartData.length !== 1 ? "s" : ""},{" "}
-                <span className="font-semibold text-gray-700 tabular-nums">{totalItems}</span>{" "}
+                <span className="font-semibold text-gray-700 tabular-nums">
+                  {totalItems}
+                </span>{" "}
                 item{totalItems !== 1 ? "s" : ""} total
               </p>
               <motion.button

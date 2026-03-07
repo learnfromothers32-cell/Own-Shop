@@ -6,23 +6,23 @@ import axios from "axios";
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
-  const currency = "GHS "
+  const currency = "GHS ";
   const delivery_fee = 10;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(true);
   const [cartItems, setCartItems] = useState({});
   const [products, setProducts] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem('token') || ""); // Initialize from localStorage
-  const [userId, setUserId] = useState(localStorage.getItem('userId') || ""); // Initialize from localStorage
+  const [token, setToken] = useState(localStorage.getItem("token") || ""); // Initialize from localStorage
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || ""); // Initialize from localStorage
 
   const navigate = useNavigate();
 
   // Log initial values
   useEffect(() => {
     console.log("🔍 ShopContext initialized with:");
-    console.log("Token from localStorage:", localStorage.getItem('token'));
-    console.log("UserId from localStorage:", localStorage.getItem('userId'));
+    console.log("Token from localStorage:", localStorage.getItem("token"));
+    console.log("UserId from localStorage:", localStorage.getItem("userId"));
     console.log("Token state:", token);
     console.log("UserId state:", userId);
   }, []);
@@ -30,33 +30,36 @@ const ShopContextProvider = (props) => {
   // Update localStorage when token changes
   useEffect(() => {
     if (token) {
-      localStorage.setItem('token', token);
+      localStorage.setItem("token", token);
     } else {
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
     }
   }, [token]);
 
   // Update localStorage when userId changes
   useEffect(() => {
     if (userId) {
-      localStorage.setItem('userId', userId);
+      localStorage.setItem("userId", userId);
       console.log("✅ UserId saved to localStorage:", userId);
     } else {
-      localStorage.removeItem('userId');
+      localStorage.removeItem("userId");
     }
   }, [userId]);
 
   // Load from localStorage on mount
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUserId = localStorage.getItem('userId');
-    
-    console.log("Loading from localStorage on mount:", { storedToken, storedUserId });
-    
+    const storedToken = localStorage.getItem("token");
+    const storedUserId = localStorage.getItem("userId");
+
+    console.log("Loading from localStorage on mount:", {
+      storedToken,
+      storedUserId,
+    });
+
     if (storedToken && !token) {
       setToken(storedToken);
     }
-    
+
     if (storedUserId && !userId) {
       setUserId(storedUserId);
     }
@@ -163,15 +166,19 @@ const ShopContextProvider = (props) => {
 
   const getUserCart = async (token) => {
     try {
-      const response = await axios.post(backendUrl +  '/api/cart/get',{},{headers:{token}})
-      if(response.data.success){
-        setCartItems(response.data.cartData)
+      const response = await axios.post(
+        backendUrl + "/api/cart/get",
+        {},
+        { headers: { token } },
+      );
+      if (response.data.success) {
+        setCartItems(response.data.cartData);
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
-  }
+  };
 
   useEffect(() => {
     getProductsData();
@@ -202,7 +209,7 @@ const ShopContextProvider = (props) => {
     token,
     setCartItems,
     userId,
-    setUserId, 
+    setUserId,
   };
 
   return (

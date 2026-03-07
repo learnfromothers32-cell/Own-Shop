@@ -38,9 +38,7 @@ const socialLinks = [
   {
     label: "TikTok",
     href: "#",
-    icon: (
-      <path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" />
-    ),
+    icon: <path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" />,
   },
 ];
 
@@ -48,10 +46,8 @@ function Footer() {
   return (
     <footer className="bg-[#0f0f0f] text-gray-400 pt-20 pb-8 px-6 sm:px-12 mt-24">
       <div className="max-w-screen-xl mx-auto">
-
         {/* Top grid */}
         <div className="grid grid-cols-1 sm:grid-cols-[2.5fr_1fr_1fr_1.2fr] gap-12 pb-14 border-b border-white/10">
-
           {/* Brand column */}
           <motion.div
             custom={0}
@@ -71,8 +67,8 @@ function Footer() {
             </Link>
             <p className="text-sm leading-relaxed text-gray-500 max-w-xs">
               Curating timeless fashion for the bold and the understated alike.
-              Every piece is chosen with intention — quality you can feel,
-              style that endures.
+              Every piece is chosen with intention — quality you can feel, style
+              that endures.
             </p>
 
             {/* Social icons */}
@@ -142,7 +138,13 @@ function Footer() {
               Support
             </p>
             <ul className="flex flex-col gap-3 text-sm text-gray-500">
-              {["FAQ", "Shipping & Delivery", "Returns & Exchanges", "Size Guide", "Track Order"].map((item) => (
+              {[
+                "FAQ",
+                "Shipping & Delivery",
+                "Returns & Exchanges",
+                "Size Guide",
+                "Track Order",
+              ].map((item) => (
                 <li key={item}>
                   <motion.span
                     whileHover={{ x: 4, color: "#fff" }}
@@ -171,19 +173,31 @@ function Footer() {
               {[
                 {
                   icon: (
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
                   ),
                   text: "+233 538-281-749",
                 },
                 {
                   icon: (
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
                   ),
                   text: "asantekelvin229@gmail.com",
                 },
                 {
                   icon: (
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   ),
                   text: "Mon – Sat, 9am – 6pm GMT",
                 },
@@ -216,20 +230,21 @@ function Footer() {
           <p>© {new Date().getFullYear()} Forever.com — All Rights Reserved.</p>
 
           <div className="flex items-center gap-6">
-            {["Terms of Service", "Privacy Policy", "Cookie Policy"].map((item, i) => (
-              <React.Fragment key={item}>
-                <motion.span
-                  whileHover={{ color: "#fff" }}
-                  className="cursor-pointer transition-colors"
-                >
-                  {item}
-                </motion.span>
-                {i < 2 && <span className="text-white/10">|</span>}
-              </React.Fragment>
-            ))}
+            {["Terms of Service", "Privacy Policy", "Cookie Policy"].map(
+              (item, i) => (
+                <React.Fragment key={item}>
+                  <motion.span
+                    whileHover={{ color: "#fff" }}
+                    className="cursor-pointer transition-colors"
+                  >
+                    {item}
+                  </motion.span>
+                  {i < 2 && <span className="text-white/10">|</span>}
+                </React.Fragment>
+              ),
+            )}
           </div>
         </motion.div>
-
       </div>
     </footer>
   );

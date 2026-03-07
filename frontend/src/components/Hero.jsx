@@ -190,7 +190,9 @@ const Hero = () => {
               whileHover={{ gap: "1.25rem" }}
               className="flex items-center gap-3 text-[11px] font-bold tracking-[0.3em] uppercase text-[#1a1a1a]/60 hover:text-[#1a1a1a] transition-colors"
             >
-              <span>Our Story</span>
+              <Link to="/about">
+                <span>Our Story</span>
+              </Link>
               <motion.span
                 animate={{ x: [0, 4, 0] }}
                 transition={{

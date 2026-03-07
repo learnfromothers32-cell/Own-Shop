@@ -32,13 +32,11 @@ const NewsLatestBox = () => {
 
   return (
     <section className="relative overflow-hidden bg-[#0f0f0f] py-24 px-4">
-
       {/* Ambient background glows */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-2xl mx-auto text-center">
-
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -81,8 +79,8 @@ const NewsLatestBox = () => {
             Your First Order
           </h2>
           <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
-            Join 50,000+ subscribers getting early access to new drops,
-            styling tips, and members-only deals — straight to their inbox.
+            Join 50,000+ subscribers getting early access to new drops, styling
+            tips, and members-only deals — straight to their inbox.
           </p>
         </motion.div>
 
@@ -168,7 +166,11 @@ const NewsLatestBox = () => {
                   {loading ? (
                     <motion.span
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 0.8,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       className="block w-4 h-4 border-2 border-white/30 border-t-white rounded-full mx-3"
                     />
                   ) : (
@@ -193,10 +195,16 @@ const NewsLatestBox = () => {
                   strokeWidth="2.5"
                   viewBox="0 0 24 24"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
-              <p className="text-white font-semibold text-lg">You're on the list!</p>
+              <p className="text-white font-semibold text-lg">
+                You're on the list!
+              </p>
               <p className="text-gray-400 text-sm">
                 Your 20% off code is on its way to your inbox.
               </p>

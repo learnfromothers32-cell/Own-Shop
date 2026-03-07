@@ -57,9 +57,11 @@ const policies = [
 ];
 
 const cardVariants = {
-  hidden:  { opacity: 0, y: 44, scale: 0.96 },
+  hidden: { opacity: 0, y: 44, scale: 0.96 },
   visible: (i) => ({
-    opacity: 1, y: 0, scale: 1,
+    opacity: 1,
+    y: 0,
+    scale: 1,
     transition: { delay: i * 0.13, duration: 0.65, ease: [0.16, 1, 0.3, 1] },
   }),
 };
@@ -69,7 +71,6 @@ function OurPolicy() {
 
   return (
     <section className="relative w-full overflow-hidden">
-
       {/* ── Dot-grid texture ── */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.025] z-0"
@@ -80,10 +81,8 @@ function OurPolicy() {
       />
 
       <div className="relative z-10 max-w-screen-xl mx-auto px-6 lg:px-12 xl:px-20 py-28">
-
         {/* ── Section header ── */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
-
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -114,7 +113,8 @@ function OurPolicy() {
               Our <span className="italic">Promise</span> to You
             </h2>
             <p className="mt-3 text-sm text-gray-400 leading-relaxed max-w-xs font-light">
-              Every order is backed by three guarantees that make shopping with us completely risk-free.
+              Every order is backed by three guarantees that make shopping with
+              us completely risk-free.
             </p>
           </motion.div>
 
@@ -127,13 +127,25 @@ function OurPolicy() {
             className="flex items-center gap-4 bg-white border border-gray-100 shadow-sm rounded-2xl px-6 py-4 self-start"
           >
             <div className="flex -space-x-2.5">
-              {["bg-blue-300", "bg-emerald-300", "bg-violet-300", "bg-amber-300"].map((c, i) => (
-                <div key={i} className={`w-8 h-8 rounded-full ${c} border-2 border-white`} />
+              {[
+                "bg-blue-300",
+                "bg-emerald-300",
+                "bg-violet-300",
+                "bg-amber-300",
+              ].map((c, i) => (
+                <div
+                  key={i}
+                  className={`w-8 h-8 rounded-full ${c} border-2 border-white`}
+                />
               ))}
             </div>
             <div>
-              <p className="text-sm font-bold text-[#1a1a1a]">50,000+ shoppers</p>
-              <p className="text-[10px] text-gray-400 tracking-wide">trust us every month</p>
+              <p className="text-sm font-bold text-[#1a1a1a]">
+                50,000+ shoppers
+              </p>
+              <p className="text-[10px] text-gray-400 tracking-wide">
+                trust us every month
+              </p>
             </div>
           </motion.div>
         </div>
@@ -150,16 +162,27 @@ function OurPolicy() {
             transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
             className="flex whitespace-nowrap w-max"
           >
-            {Array(4).fill(null).map((_, i) => (
-              <span key={i} className="flex items-center">
-                {["Free Exchanges", "7-Day Returns", "24/7 Support", "No Hidden Fees", "100% Original", "Risk-Free Shopping"].map((t) => (
-                  <span key={t} className="flex items-center gap-6 px-8">
-                    <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#414141]/30">{t}</span>
-                    <span className="text-[#414141]/20 text-xs">◆</span>
-                  </span>
-                ))}
-              </span>
-            ))}
+            {Array(4)
+              .fill(null)
+              .map((_, i) => (
+                <span key={i} className="flex items-center">
+                  {[
+                    "Free Exchanges",
+                    "7-Day Returns",
+                    "24/7 Support",
+                    "No Hidden Fees",
+                    "100% Original",
+                    "Risk-Free Shopping",
+                  ].map((t) => (
+                    <span key={t} className="flex items-center gap-6 px-8">
+                      <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[#414141]/30">
+                        {t}
+                      </span>
+                      <span className="text-[#414141]/20 text-xs">◆</span>
+                    </span>
+                  ))}
+                </span>
+              ))}
           </motion.div>
         </motion.div>
 
@@ -175,14 +198,21 @@ function OurPolicy() {
               viewport={{ once: true, margin: "-40px" }}
               onHoverStart={() => setHovered(i)}
               onHoverEnd={() => setHovered(null)}
-              whileHover={{ y: -8, transition: { duration: 0.3, ease: "easeOut" } }}
+              whileHover={{
+                y: -8,
+                transition: { duration: 0.3, ease: "easeOut" },
+              }}
               className={`relative rounded-3xl bg-gradient-to-br ${policy.color} border ${policy.border} p-8 flex flex-col overflow-hidden cursor-default group`}
             >
               {/* Ambient blur circle */}
-              <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full ${policy.glow} blur-2xl pointer-events-none`} />
+              <div
+                className={`absolute -top-10 -right-10 w-40 h-40 rounded-full ${policy.glow} blur-2xl pointer-events-none`}
+              />
 
               {/* Badge */}
-              <span className={`absolute top-5 right-5 text-[9px] font-bold tracking-[0.2em] uppercase px-3 py-1 rounded-full ${policy.accent}`}>
+              <span
+                className={`absolute top-5 right-5 text-[9px] font-bold tracking-[0.2em] uppercase px-3 py-1 rounded-full ${policy.accent}`}
+              >
                 {policy.badge}
               </span>
 
@@ -194,13 +224,21 @@ function OurPolicy() {
                   transition={{ duration: 0.5 }}
                   className={`w-14 h-14 flex items-center justify-center bg-white rounded-2xl shadow-sm ring-4 ${policy.ring}`}
                 >
-                  <img src={policy.icon} alt={policy.title} className="w-7 h-7 object-contain" />
+                  <img
+                    src={policy.icon}
+                    alt={policy.title}
+                    className="w-7 h-7 object-contain"
+                  />
                 </motion.div>
 
                 {/* Stat */}
                 <div className="text-right">
-                  <p className="text-2xl font-black text-[#1a1a1a] leading-none">{policy.stat}</p>
-                  <p className="text-[9px] tracking-[0.2em] uppercase text-gray-400 mt-0.5">{policy.statLabel}</p>
+                  <p className="text-2xl font-black text-[#1a1a1a] leading-none">
+                    {policy.stat}
+                  </p>
+                  <p className="text-[9px] tracking-[0.2em] uppercase text-gray-400 mt-0.5">
+                    {policy.statLabel}
+                  </p>
                 </div>
               </div>
 
@@ -209,15 +247,21 @@ function OurPolicy() {
                 <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-1.5">
                   {policy.subtitle}
                 </p>
-                <h3 className="text-lg font-bold text-[#1a1a1a] mb-3 leading-snug">{policy.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{policy.description}</p>
+                <h3 className="text-lg font-bold text-[#1a1a1a] mb-3 leading-snug">
+                  {policy.title}
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed">
+                  {policy.description}
+                </p>
               </div>
 
               {/* Footer */}
               <div className="relative z-10 flex items-center justify-between mt-8 pt-5 border-t border-black/5">
                 <div className="flex items-center gap-1.5">
                   <span className={`w-1.5 h-1.5 rounded-full ${policy.dot}`} />
-                  <span className="text-[10px] text-gray-400 font-semibold tracking-wide uppercase">Always included</span>
+                  <span className="text-[10px] text-gray-400 font-semibold tracking-wide uppercase">
+                    Always included
+                  </span>
                 </div>
 
                 {/* Animated arrow on hover */}
@@ -230,8 +274,18 @@ function OurPolicy() {
                       transition={{ duration: 0.2 }}
                       className={`w-7 h-7 rounded-full bg-gradient-to-br ${policy.darkColor} flex items-center justify-center`}
                     >
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"
+                        />
                       </svg>
                     </motion.div>
                   )}
@@ -266,12 +320,13 @@ function OurPolicy() {
             ].map(({ icon, label }) => (
               <div key={label} className="flex items-center gap-1.5">
                 <span className="text-sm">{icon}</span>
-                <span className="text-[10px] font-semibold text-gray-400 tracking-wide hidden sm:block">{label}</span>
+                <span className="text-[10px] font-semibold text-gray-400 tracking-wide hidden sm:block">
+                  {label}
+                </span>
               </div>
             ))}
           </div>
         </motion.div>
-
       </div>
     </section>
   );

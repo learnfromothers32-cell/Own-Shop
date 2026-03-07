@@ -7,7 +7,8 @@ import NewsLatestBox from "../components/NewsLatestBox";
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
   visible: (i = 0) => ({
-    opacity: 1, y: 0,
+    opacity: 1,
+    y: 0,
     transition: { duration: 0.65, delay: i * 0.12, ease: [0.33, 1, 0.68, 1] },
   }),
 };
@@ -44,16 +45,30 @@ const values = [
 ];
 
 const timeline = [
-  { year: "2023", event: "Forever was founded with a single rail of 40 pieces and a big vision." },
-  { year: "2024", event: "Reached 10,000 customers and launched our first exclusive capsule collection." },
-  { year: "2025", event: "Expanded to international shipping across 35 countries." },
-  { year: "2026", event: "Crossed 50,000 happy customers and launched our sustainability pledge." },
+  {
+    year: "2023",
+    event:
+      "Forever was founded with a single rail of 40 pieces and a big vision.",
+  },
+  {
+    year: "2024",
+    event:
+      "Reached 10,000 customers and launched our first exclusive capsule collection.",
+  },
+  {
+    year: "2025",
+    event: "Expanded to international shipping across 35 countries.",
+  },
+  {
+    year: "2026",
+    event:
+      "Crossed 50,000 happy customers and launched our sustainability pledge.",
+  },
 ];
 
 const About = () => {
   return (
     <div className="max-w-screen-xl mx-auto px-4 sm:px-8 pb-0">
-
       {/* ── Hero ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -85,7 +100,6 @@ const About = () => {
 
       {/* ── Story section ── */}
       <div className="flex flex-col md:flex-row gap-16 items-center mb-28">
-
         {/* Image */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -109,7 +123,12 @@ const About = () => {
             initial={{ opacity: 0, y: 24, scale: 0.9 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4, type: "spring", stiffness: 260, damping: 22 }}
+            transition={{
+              delay: 0.4,
+              type: "spring",
+              stiffness: 260,
+              damping: 22,
+            }}
             className="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-xl px-6 py-4 border border-gray-100"
           >
             <p className="text-3xl font-bold text-[#1a1a1a]">50k+</p>
@@ -171,8 +190,12 @@ const About = () => {
             viewport={{ once: true }}
             className="bg-white py-10 flex flex-col items-center justify-center text-center"
           >
-            <p className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">{value}</p>
-            <p className="text-[11px] tracking-widest uppercase text-gray-400 mt-1.5">{label}</p>
+            <p className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">
+              {value}
+            </p>
+            <p className="text-[11px] tracking-widest uppercase text-gray-400 mt-1.5">
+              {label}
+            </p>
           </motion.div>
         ))}
       </motion.div>
@@ -274,7 +297,9 @@ const About = () => {
                 <div className="relative flex items-center justify-center shrink-0 mt-1">
                   <div className="w-3 h-3 rounded-full bg-[#1a1a1a] z-10" />
                 </div>
-                <p className="text-sm text-gray-500 leading-relaxed pt-0.5">{event}</p>
+                <p className="text-sm text-gray-500 leading-relaxed pt-0.5">
+                  {event}
+                </p>
               </motion.div>
             ))}
           </div>

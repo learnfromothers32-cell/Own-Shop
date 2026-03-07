@@ -72,15 +72,16 @@ const RelatedProducts = ({ category, subCategory }) => {
     if (products.length > 0) {
       setRelated(
         products
-          .filter((i) => i.category === category && i.subCategory === subCategory)
-          .slice(0, 5)
+          .filter(
+            (i) => i.category === category && i.subCategory === subCategory,
+          )
+          .slice(0, 5),
       );
     }
   }, [products, category, subCategory]);
 
   return (
     <section className="relative overflow-hidden my-24 px-1 pb-10">
-
       {/* ── Subtle ambient blobs ── */}
       <div className="absolute -z-10 w-[480px] h-[480px] rounded-full bg-violet-600   opacity-[0.07] blur-[110px] -top-24  left-[10%]" />
       <div className="absolute -z-10 w-[360px] h-[360px] rounded-full bg-rose-500     opacity-[0.07] blur-[110px] top-10    right-[5%]" />
@@ -88,7 +89,6 @@ const RelatedProducts = ({ category, subCategory }) => {
 
       {/* ── Header ── */}
       <header className="relative z-10 flex flex-col items-center text-center mb-14 gap-3">
-
         {/* Orbit indicator */}
         <div className="relative w-10 h-10 rounded-full border border-dashed border-violet-400/30 flex items-center justify-center mb-1">
           <div className="w-[7px] h-[7px] rounded-full bg-violet-500/80" />
@@ -129,16 +129,19 @@ const RelatedProducts = ({ category, subCategory }) => {
                        border border-white/[0.06] bg-white/[0.03] backdrop-blur-2xl
                        cursor-pointer"
             style={{
-              transition: "transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s cubic-bezier(.22,1,.36,1), border-color .25s ease",
+              transition:
+                "transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s cubic-bezier(.22,1,.36,1), border-color .25s ease",
             }}
             onMouseMove={(e) => {
               const r = e.currentTarget.getBoundingClientRect();
               const glow = e.currentTarget.querySelector(".rp-card-glow");
-              if (glow) glow.style.background = `radial-gradient(circle at ${e.clientX - r.left}px ${e.clientY - r.top}px, rgba(139,92,246,0.14), transparent 60%)`;
+              if (glow)
+                glow.style.background = `radial-gradient(circle at ${e.clientX - r.left}px ${e.clientY - r.top}px, rgba(139,92,246,0.14), transparent 60%)`;
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-8px) scale(1.025)";
-              e.currentTarget.style.boxShadow = "0 24px 56px -12px rgba(109,40,217,0.35), 0 0 0 1px rgba(139,92,246,0.3), inset 0 1px 0 rgba(255,255,255,0.08)";
+              e.currentTarget.style.boxShadow =
+                "0 24px 56px -12px rgba(109,40,217,0.35), 0 0 0 1px rgba(139,92,246,0.3), inset 0 1px 0 rgba(255,255,255,0.08)";
               e.currentTarget.style.borderColor = "rgba(139,92,246,0.45)";
             }}
             onMouseLeave={(e) => {
@@ -150,26 +153,40 @@ const RelatedProducts = ({ category, subCategory }) => {
             {/* Cursor-tracked glow */}
             <div
               className="rp-card-glow absolute inset-0 z-0 rounded-2xl pointer-events-none opacity-0 transition-opacity duration-300"
-              style={{ background: "radial-gradient(circle at 50% 50%, rgba(139,92,246,0.12), transparent 60%)" }}
+              style={{
+                background:
+                  "radial-gradient(circle at 50% 50%, rgba(139,92,246,0.12), transparent 60%)",
+              }}
             />
 
             {/* Subtle scanline shimmer */}
             <div
               className="rp-scanline absolute top-0 -left-[70%] w-[45%] h-full z-[1] pointer-events-none -skew-x-[18deg] opacity-60"
-              style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.04), transparent)" }}
+              style={{
+                background:
+                  "linear-gradient(to right, transparent, rgba(255,255,255,0.04), transparent)",
+              }}
             />
 
             {/* Top accent line */}
-            <div className="absolute top-0 left-0 right-0 h-px z-[3]"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(139,92,246,0.5), rgba(232,121,249,0.4), transparent)" }}
+            <div
+              className="absolute top-0 left-0 right-0 h-px z-[3]"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, rgba(139,92,246,0.5), rgba(232,121,249,0.4), transparent)",
+              }}
             />
 
             {/* NEW badge */}
-            <div className="absolute top-2.5 left-2.5 z-[4]
+            <div
+              className="absolute top-2.5 left-2.5 z-[4]
                             text-[8px] font-bold tracking-[1.8px] uppercase
                             px-2 py-[3px] rounded-full text-white/90
                             border border-white/10"
-              style={{ background: "rgba(109,40,217,0.6)", backdropFilter: "blur(8px)" }}
+              style={{
+                background: "rgba(109,40,217,0.6)",
+                backdropFilter: "blur(8px)",
+              }}
             >
               Related
             </div>
@@ -211,16 +228,20 @@ const RelatedProducts = ({ category, subCategory }) => {
                      text-white text-[11px] font-semibold tracking-[2.5px] uppercase
                      px-9 py-3.5 rounded-full border border-violet-400/25
                      transition-all duration-200 hover:scale-[1.05] hover:brightness-110 active:scale-95"
-          style={{ background: "linear-gradient(135deg, #6d28d9 0%, #9333ea 50%, #db2777 100%)" }}
+          style={{
+            background:
+              "linear-gradient(135deg, #6d28d9 0%, #9333ea 50%, #db2777 100%)",
+          }}
         >
           <span>Browse All Similar</span>
-          <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+          <span className="transition-transform duration-200 group-hover:translate-x-1">
+            →
+          </span>
         </button>
         <p className="text-[10px] text-white/20 tracking-widest uppercase">
           {related.length} items curated for you
         </p>
       </footer>
-
     </section>
   );
 };

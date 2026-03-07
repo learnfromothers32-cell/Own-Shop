@@ -8,8 +8,14 @@ import { motion, AnimatePresence } from "framer-motion";
 function Navbar() {
   const [visible, setVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { setShowSearch, getCartCount, token, setToken, setCartItems, navigate } =
-    useContext(ShopContext);
+  const {
+    setShowSearch,
+    getCartCount,
+    token,
+    setToken,
+    setCartItems,
+    navigate,
+  } = useContext(ShopContext);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -33,15 +39,29 @@ function Navbar() {
 
   const sidebarVariants = {
     hidden: { x: "100%", opacity: 0 },
-    visible: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 300, damping: 30 } },
-    exit: { x: "100%", opacity: 0, transition: { duration: 0.25, ease: "easeInOut" } },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 300, damping: 30 },
+    },
+    exit: {
+      x: "100%",
+      opacity: 0,
+      transition: { duration: 0.25, ease: "easeInOut" },
+    },
   };
 
   const linkVariants = {
     hidden: { x: 40, opacity: 0 },
     visible: (i) => ({
-      x: 0, opacity: 1,
-      transition: { delay: i * 0.07 + 0.1, type: "spring", stiffness: 260, damping: 22 },
+      x: 0,
+      opacity: 1,
+      transition: {
+        delay: i * 0.07 + 0.1,
+        type: "spring",
+        stiffness: 260,
+        damping: 22,
+      },
     }),
   };
 
@@ -222,8 +242,18 @@ function Navbar() {
                 transition={{ duration: 0.2 }}
                 className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200"
               >
-                <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-4 h-4 text-gray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </motion.button>
             </div>
@@ -231,13 +261,21 @@ function Navbar() {
             {/* Sidebar Links */}
             <nav className="flex flex-col px-4 pt-6 gap-1">
               {navLinks.map(({ to, label }, i) => (
-                <motion.div key={to} custom={i} variants={linkVariants} initial="hidden" animate="visible">
+                <motion.div
+                  key={to}
+                  custom={i}
+                  variants={linkVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
                   <NavLink
                     to={to}
                     onClick={() => setVisible(false)}
                     className={({ isActive }) =>
                       `flex items-center px-4 py-3 rounded-xl text-sm font-semibold tracking-widest uppercase transition-colors ${
-                        isActive ? "bg-black text-white" : "text-gray-500 hover:bg-gray-50 hover:text-black"
+                        isActive
+                          ? "bg-black text-white"
+                          : "text-gray-500 hover:bg-gray-50 hover:text-black"
                       }`
                     }
                   >
@@ -256,7 +294,10 @@ function Navbar() {
                 className="mt-auto px-6 pb-8"
               >
                 <button
-                  onClick={() => { logOut(); setVisible(false); }}
+                  onClick={() => {
+                    logOut();
+                    setVisible(false);
+                  }}
                   className="w-full py-3 rounded-xl border-2 border-gray-200 text-sm font-semibold text-gray-500 hover:border-red-300 hover:text-red-500 transition-colors"
                 >
                   Log Out

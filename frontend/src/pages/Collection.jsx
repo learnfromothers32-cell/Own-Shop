@@ -13,15 +13,35 @@ const containerVariants = {
 const cardVariants = {
   hidden: { opacity: 0, y: 32, scale: 0.96 },
   visible: {
-    opacity: 1, y: 0, scale: 1,
+    opacity: 1,
+    y: 0,
+    scale: 1,
     transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
   },
   exit: { opacity: 0, scale: 0.95, transition: { duration: 0.25 } },
 };
 
-const CATEGORIES     = ["Cases", "Screen Protectors", "Chargers", "Cables", "Mounts", "Power Banks", "Headphones", "Smart Watches"];
-const SUB_CATEGORIES = ["iPhone", "Samsung", "Google Pixel", "AirPods", "MagSafe", "Wireless", "Fast Charging", "Car Mounts"];
-const SORT_OPTIONS   = [
+const CATEGORIES = [
+  "Cases",
+  "Screen Protectors",
+  "Chargers",
+  "Cables",
+  "Mounts",
+  "Power Banks",
+  "Headphones",
+  "Smart Watches",
+];
+const SUB_CATEGORIES = [
+  "iPhone",
+  "Samsung",
+  "Google Pixel",
+  "AirPods",
+  "MagSafe",
+  "Wireless",
+  "Fast Charging",
+  "Car Mounts",
+];
+const SORT_OPTIONS = [
   { value: "relevant", label: "Most Relevant" },
   { value: "low-high", label: "Price: Low → High" },
   { value: "high-low", label: "Price: High → Low" },
@@ -30,48 +50,126 @@ const SORT_OPTIONS   = [
 /* ── Inline icon set ── */
 const Icons = {
   chevronDown: (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      viewBox="0 0 24 24"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
     </svg>
   ),
   chevronRight: (
-    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+    <svg
+      className="w-3 h-3"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      viewBox="0 0 24 24"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
     </svg>
   ),
   filter: (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 4h18M7 10h10M11 16h2" />
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 4h18M7 10h10M11 16h2"
+      />
     </svg>
   ),
   search: (
-    <svg className="w-7 h-7 text-gray-300" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    <svg
+      className="w-7 h-7 text-gray-300"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      />
     </svg>
   ),
   sort: (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h18M6 12h12M9 17h6" />
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 7h18M6 12h12M9 17h6"
+      />
     </svg>
   ),
   close: (
-    <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+    <svg
+      className="w-2.5 h-2.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 18L18 6M6 6l12 12"
+      />
     </svg>
   ),
   check: (
-    <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+    <svg
+      className="w-2.5 h-2.5 text-white"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      viewBox="0 0 24 24"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
     </svg>
   ),
   arrowRight: (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M17 8l4 4m0 0l-4 4m4-4H3"
+      />
     </svg>
   ),
   grid: (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"
+      />
     </svg>
   ),
   sparkle: (
@@ -83,21 +181,23 @@ const Icons = {
 
 const Collection = () => {
   const { products, search, showSearch } = useContext(ShopContext);
-  const [showFilter, setShowFilter]       = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
   const [filterProduct, setFilterProduct] = useState([]);
-  const [category, setCategory]           = useState([]);
-  const [subCategory, setSubCategory]     = useState([]);
-  const [sortType, setSortType]           = useState("relevant");
+  const [category, setCategory] = useState([]);
+  const [subCategory, setSubCategory] = useState([]);
+  const [sortType, setSortType] = useState("relevant");
 
   const toggle = (setter, value) =>
     setter((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
     );
 
   const applyFilter = () => {
     let copy = products.slice();
     if (showSearch && search)
-      copy = copy.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
+      copy = copy.filter((p) =>
+        p.name.toLowerCase().includes(search.toLowerCase()),
+      );
     if (category.length)
       copy = copy.filter((p) => category.includes(p.category));
     if (subCategory.length)
@@ -109,18 +209,24 @@ const Collection = () => {
     let copy = [...filterProduct];
     if (sortType === "low-high") copy.sort((a, b) => a.price - b.price);
     else if (sortType === "high-low") copy.sort((a, b) => b.price - a.price);
-    else { applyFilter(); return; }
+    else {
+      applyFilter();
+      return;
+    }
     setFilterProduct(copy);
   };
 
-  useEffect(() => { applyFilter(); }, [category, subCategory, search, showSearch, products]);
-  useEffect(() => { sortProduct();  }, [sortType]);
+  useEffect(() => {
+    applyFilter();
+  }, [category, subCategory, search, showSearch, products]);
+  useEffect(() => {
+    sortProduct();
+  }, [sortType]);
 
   const activeFilters = [...category, ...subCategory];
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 sm:px-8 pt-10">
-
       {/* ── Page header ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -130,7 +236,9 @@ const Collection = () => {
       >
         {/* Breadcrumb */}
         <div className="flex items-center gap-1.5 text-[10px] text-gray-400 tracking-wide mb-3">
-          <span className="hover:text-gray-600 cursor-pointer transition-colors">Home</span>
+          <span className="hover:text-gray-600 cursor-pointer transition-colors">
+            Home
+          </span>
           <span className="text-gray-300">{Icons.chevronRight}</span>
           <span className="font-semibold text-gray-600">Collections</span>
         </div>
@@ -161,8 +269,12 @@ const Collection = () => {
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
             className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-gray-50 border border-gray-100 self-end mb-1"
           >
-            <span className="text-[10px] text-gray-400 tracking-wide uppercase font-medium">Results</span>
-            <span className="text-sm font-black text-[#1a1a1a] tabular-nums">{filterProduct.length}</span>
+            <span className="text-[10px] text-gray-400 tracking-wide uppercase font-medium">
+              Results
+            </span>
+            <span className="text-sm font-black text-[#1a1a1a] tabular-nums">
+              {filterProduct.length}
+            </span>
           </motion.div>
         </div>
 
@@ -175,7 +287,9 @@ const Collection = () => {
               exit={{ opacity: 0, y: -4 }}
               className="flex items-center gap-2 mt-3 flex-wrap"
             >
-              <span className="text-[10px] text-gray-400 tracking-wide">Filtered by:</span>
+              <span className="text-[10px] text-gray-400 tracking-wide">
+                Filtered by:
+              </span>
               {activeFilters.map((f) => (
                 <motion.span
                   key={f}
@@ -194,7 +308,6 @@ const Collection = () => {
       </motion.div>
 
       <div className="flex flex-col sm:flex-row gap-8">
-
         {/* ── Sidebar Filter ── */}
         <motion.aside
           initial={{ opacity: 0, x: -24 }}
@@ -244,7 +357,10 @@ const Collection = () => {
                   initial={{ opacity: 0, x: 8 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 8 }}
-                  onClick={() => { setCategory([]); setSubCategory([]); }}
+                  onClick={() => {
+                    setCategory([]);
+                    setSubCategory([]);
+                  }}
                   className="text-[10px] text-gray-400 hover:text-[#1a1a1a] tracking-wide uppercase font-semibold transition-colors flex items-center gap-1"
                 >
                   Clear {Icons.close}
@@ -254,7 +370,8 @@ const Collection = () => {
           </div>
 
           <AnimatePresence initial={false}>
-            {(showFilter || typeof window !== "undefined" && window.innerWidth >= 640) && (
+            {(showFilter ||
+              (typeof window !== "undefined" && window.innerWidth >= 640)) && (
               <motion.div
                 key="filters"
                 initial={{ opacity: 0, height: 0 }}
@@ -263,7 +380,6 @@ const Collection = () => {
                 transition={{ duration: 0.3 }}
                 className="sm:!opacity-100 sm:!h-auto overflow-hidden"
               >
-
                 {/* Active filter chips */}
                 <AnimatePresence>
                   {activeFilters.length > 0 && (
@@ -290,14 +406,19 @@ const Collection = () => {
                           className="flex items-center gap-1.5 px-3 py-1 bg-[#1a1a1a] text-white text-[10px] font-semibold tracking-wide uppercase rounded-full"
                         >
                           {f}
-                          <span className="text-gray-400 opacity-70">{Icons.close}</span>
+                          <span className="text-gray-400 opacity-70">
+                            {Icons.close}
+                          </span>
                         </motion.button>
                       ))}
                       <motion.button
                         layout
                         whileHover={{ scale: 1.04 }}
                         whileTap={{ scale: 0.96 }}
-                        onClick={() => { setCategory([]); setSubCategory([]); }}
+                        onClick={() => {
+                          setCategory([]);
+                          setSubCategory([]);
+                        }}
                         className="px-3 py-1 border border-gray-200 text-[10px] font-semibold tracking-wide uppercase rounded-full text-gray-400 hover:text-gray-700 hover:border-gray-400 transition-colors"
                       >
                         Clear all
@@ -327,7 +448,6 @@ const Collection = () => {
                     />
                   ))}
                 </FilterGroup>
-
               </motion.div>
             )}
           </AnimatePresence>
@@ -335,7 +455,6 @@ const Collection = () => {
 
         {/* ── Product Grid ── */}
         <div className="flex-1 min-w-0">
-
           {/* Sort bar */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -358,14 +477,18 @@ const Collection = () => {
             </p>
 
             <div className="relative ml-auto flex items-center gap-2">
-              <span className="hidden sm:block text-gray-300">{Icons.sort}</span>
+              <span className="hidden sm:block text-gray-300">
+                {Icons.sort}
+              </span>
               <select
                 value={sortType}
                 onChange={(e) => setSortType(e.target.value)}
                 className="appearance-none pl-4 pr-10 py-2.5 rounded-full border border-gray-200 text-xs font-semibold text-gray-700 bg-white focus:outline-none focus:border-gray-400 cursor-pointer transition-colors hover:border-gray-300"
               >
                 {SORT_OPTIONS.map(({ value, label }) => (
-                  <option key={value} value={value}>{label}</option>
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
                 ))}
               </select>
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
@@ -392,12 +515,19 @@ const Collection = () => {
                 >
                   {Icons.search}
                 </motion.div>
-                <p className="text-sm font-semibold text-gray-700 mb-1.5">No products found</p>
-                <p className="text-xs text-gray-400 max-w-[200px] leading-relaxed">Try adjusting your filters or search term.</p>
+                <p className="text-sm font-semibold text-gray-700 mb-1.5">
+                  No products found
+                </p>
+                <p className="text-xs text-gray-400 max-w-[200px] leading-relaxed">
+                  Try adjusting your filters or search term.
+                </p>
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => { setCategory([]); setSubCategory([]); }}
+                  onClick={() => {
+                    setCategory([]);
+                    setSubCategory([]);
+                  }}
                   className="mt-6 flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#1a1a1a] text-white text-xs font-semibold tracking-widest uppercase hover:bg-[#333] transition-colors"
                 >
                   Clear Filters {Icons.close}
@@ -417,7 +547,10 @@ const Collection = () => {
                     variants={cardVariants}
                     layout
                     className="group relative"
-                    whileHover={{ y: -4, transition: { duration: 0.25, ease: [0.33, 1, 0.68, 1] } }}
+                    whileHover={{
+                      y: -4,
+                      transition: { duration: 0.25, ease: [0.33, 1, 0.68, 1] },
+                    }}
                   >
                     {/* Hover top-accent line */}
                     <motion.div
@@ -453,10 +586,15 @@ const Collection = () => {
               >
                 <p className="text-xs text-gray-400 tracking-wide">
                   Showing all{" "}
-                  <span className="font-semibold text-gray-700">{filterProduct.length}</span>{" "}
+                  <span className="font-semibold text-gray-700">
+                    {filterProduct.length}
+                  </span>{" "}
                   item{filterProduct.length !== 1 ? "s" : ""}
                   {activeFilters.length > 0 && (
-                    <span className="text-gray-400"> for {activeFilters.join(", ")}</span>
+                    <span className="text-gray-400">
+                      {" "}
+                      for {activeFilters.join(", ")}
+                    </span>
                   )}
                 </p>
                 <motion.button
@@ -465,14 +603,23 @@ const Collection = () => {
                   className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.2em] uppercase text-gray-500 hover:text-[#1a1a1a] transition-colors duration-200"
                 >
                   Back to top
-                  <svg className="w-3.5 h-3.5 rotate-[-90deg]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  <svg
+                    className="w-3.5 h-3.5 rotate-[-90deg]"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
                   </svg>
                 </motion.button>
               </motion.div>
             )}
           </AnimatePresence>
-
         </div>
       </div>
     </div>
@@ -510,9 +657,7 @@ function FilterGroup({ title, icon, children }) {
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <div className="flex flex-col gap-1 px-4 py-3">
-              {children}
-            </div>
+            <div className="flex flex-col gap-1 px-4 py-3">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -528,7 +673,9 @@ function FilterChip({ label, checked, onChange }) {
         onClick={onChange}
         whileTap={{ scale: 0.85 }}
         className={`w-4 h-4 rounded flex items-center justify-center border-2 transition-all duration-200 shrink-0 ${
-          checked ? "bg-[#1a1a1a] border-[#1a1a1a]" : "border-gray-300 group-hover:border-gray-500"
+          checked
+            ? "bg-[#1a1a1a] border-[#1a1a1a]"
+            : "border-gray-300 group-hover:border-gray-500"
         }`}
       >
         <AnimatePresence>
@@ -544,7 +691,9 @@ function FilterChip({ label, checked, onChange }) {
           )}
         </AnimatePresence>
       </motion.div>
-      <span className={`text-sm transition-colors duration-200 ${checked ? "text-[#1a1a1a] font-semibold" : "text-gray-500 group-hover:text-gray-800"}`}>
+      <span
+        className={`text-sm transition-colors duration-200 ${checked ? "text-[#1a1a1a] font-semibold" : "text-gray-500 group-hover:text-gray-800"}`}
+      >
         {label}
       </span>
       {checked && (
@@ -558,58 +707,6 @@ function FilterChip({ label, checked, onChange }) {
 }
 
 export default Collection;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useContext, useEffect, useState } from "react";
 // import { ShopContext } from "../context/shopContext";

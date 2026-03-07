@@ -5,8 +5,9 @@ import { toast } from "react-toastify";
 
 function Login() {
   const [currentState, setCurrentState] = useState("Login");
-  const { token, setToken, navigate, backendUrl, setUserId } = useContext(ShopContext);
-  
+  const { token, setToken, navigate, backendUrl, setUserId } =
+    useContext(ShopContext);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,8 +19,12 @@ function Login() {
 
     try {
       // 1. Determine endpoint based on state
-      const endpoint = currentState === "Login" ? "/api/user/login" : "/api/user/register";
-      const payload = currentState === "Login" ? { email, password } : { name, email, password };
+      const endpoint =
+        currentState === "Login" ? "/api/user/login" : "/api/user/register";
+      const payload =
+        currentState === "Login"
+          ? { email, password }
+          : { name, email, password };
 
       const response = await axios.post(backendUrl + endpoint, payload);
 
@@ -41,7 +46,9 @@ function Login() {
       }
     } catch (error) {
       console.error("Auth error:", error);
-      const errorMsg = error.response?.data?.message || "Connection failed. Is the backend running?";
+      const errorMsg =
+        error.response?.data?.message ||
+        "Connection failed. Is the backend running?";
       toast.error(errorMsg);
     } finally {
       setLoading(false);
@@ -94,19 +101,27 @@ function Login() {
         />
 
         <div className="w-full flex justify-between text-xs font-medium text-gray-500 mt-[-4px]">
-          <span className="hover:text-black cursor-pointer transition-colors">Forgot password?</span>
+          <span className="hover:text-black cursor-pointer transition-colors">
+            Forgot password?
+          </span>
           {currentState === "Login" ? (
-            <span onClick={() => setCurrentState("Sign up")} className="text-black cursor-pointer underline underline-offset-4">
+            <span
+              onClick={() => setCurrentState("Sign up")}
+              className="text-black cursor-pointer underline underline-offset-4"
+            >
               Create account
             </span>
           ) : (
-            <span onClick={() => setCurrentState("Login")} className="text-black cursor-pointer underline underline-offset-4">
+            <span
+              onClick={() => setCurrentState("Login")}
+              className="text-black cursor-pointer underline underline-offset-4"
+            >
               Login here
             </span>
           )}
         </div>
 
-        <button 
+        <button
           type="submit"
           disabled={loading}
           className="w-full bg-black text-white font-bold py-3 mt-4 rounded hover:bg-gray-900 active:scale-[0.98] transition-all disabled:bg-gray-400 flex items-center justify-center gap-2"
@@ -116,8 +131,10 @@ function Login() {
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               Processing...
             </>
+          ) : currentState === "Login" ? (
+            "Sign In"
           ) : (
-            currentState === "Login" ? "Sign In" : "Sign Up"
+            "Sign Up"
           )}
         </button>
       </form>
