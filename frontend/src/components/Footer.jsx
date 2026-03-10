@@ -23,23 +23,39 @@ const companyLinks = [
 const socialLinks = [
   {
     label: "Instagram",
-    href: "#",
+    href: "https://instagram.com/yourusername",
     icon: (
       <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z M4 6a2 2 0 100-4 2 2 0 000 4z" />
     ),
   },
   {
     label: "Twitter / X",
-    href: "#",
+    href: "https://twitter.com/yourusername",
     icon: (
       <path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 8v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
     ),
   },
   {
     label: "TikTok",
-    href: "#",
+    href: "https://tiktok.com/@yourusername",
     icon: <path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" />,
   },
+];
+
+// ✅ SUPPORT LINKS WITH ROUTES
+const supportLinks = [
+  { label: "FAQ", to: "/faq" },
+  { label: "Shipping & Delivery", to: "/delivery" },
+  { label: "Returns & Exchanges", to: "/returns" },
+  { label: "Size Guide", to: "/size-guide" },
+  { label: "Track Order", to: "/track-order" },
+];
+
+// ✅ BOTTOM LINKS WITH ROUTES
+const bottomLinks = [
+  { label: "Terms of Service", to: "/terms" },
+  { label: "Privacy Policy", to: "/privacy" },
+  { label: "Cookie Policy", to: "/cookies" },
 ];
 
 function Footer() {
@@ -77,6 +93,8 @@ function Footer() {
                 <motion.a
                   key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   whileHover={{ scale: 1.15, color: "#fff" }}
                   whileTap={{ scale: 0.92 }}
@@ -126,7 +144,7 @@ function Footer() {
             </ul>
           </motion.div>
 
-          {/* Support */}
+          {/* Support - UPDATED WITH ROUTES */}
           <motion.div
             custom={2}
             variants={fadeUp}
@@ -137,22 +155,18 @@ function Footer() {
             <p className="text-white text-xs font-bold tracking-[0.25em] uppercase mb-6">
               Support
             </p>
-            <ul className="flex flex-col gap-3 text-sm text-gray-500">
-              {[
-                "FAQ",
-                "Shipping & Delivery",
-                "Returns & Exchanges",
-                "Size Guide",
-                "Track Order",
-              ].map((item) => (
-                <li key={item}>
-                  <motion.span
-                    whileHover={{ x: 4, color: "#fff" }}
-                    transition={{ duration: 0.2 }}
-                    className="inline-block cursor-pointer transition-colors"
-                  >
-                    {item}
-                  </motion.span>
+            <ul className="flex flex-col gap-3">
+              {supportLinks.map(({ label, to }) => (
+                <li key={label}>
+                  <Link to={to}>
+                    <motion.span
+                      whileHover={{ x: 4, color: "#fff" }}
+                      transition={{ duration: 0.2 }}
+                      className="text-sm text-gray-500 inline-block transition-colors cursor-pointer"
+                    >
+                      {label}
+                    </motion.span>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -219,7 +233,7 @@ function Footer() {
           </motion.div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom bar - UPDATED WITH ROUTES */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -230,19 +244,21 @@ function Footer() {
           <p>© {new Date().getFullYear()} Forever.com — All Rights Reserved.</p>
 
           <div className="flex items-center gap-6">
-            {["Terms of Service", "Privacy Policy", "Cookie Policy"].map(
-              (item, i) => (
-                <React.Fragment key={item}>
+            {bottomLinks.map(({ label, to }, i) => (
+              <React.Fragment key={label}>
+                <Link to={to}>
                   <motion.span
                     whileHover={{ color: "#fff" }}
                     className="cursor-pointer transition-colors"
                   >
-                    {item}
+                    {label}
                   </motion.span>
-                  {i < 2 && <span className="text-white/10">|</span>}
-                </React.Fragment>
-              ),
-            )}
+                </Link>
+                {i < bottomLinks.length - 1 && (
+                  <span className="text-white/10">|</span>
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </motion.div>
       </div>

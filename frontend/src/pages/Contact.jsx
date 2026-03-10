@@ -3,6 +3,8 @@ import Title from "../components/Title";
 import { assets } from "../assets/assets";
 import { motion, AnimatePresence } from "framer-motion";
 import NewsLatestBox from "../components/NewsLatestBox";
+import axios from "axios"; // ✅ Added
+import { toast } from "react-toastify"; // ✅ Added
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -70,12 +72,45 @@ const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // ✅ UPDATED: Real API call to backend
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validation
+    if (!formState.name || !formState.email || !formState.message) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000));
-    setLoading(false);
-    setSubmitted(true);
+    
+    try {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      
+      const response = await axios.post(
+        `${backendUrl}/api/contact/send`,
+        {
+          name: formState.name,
+          email: formState.email,
+          message: formState.message
+        }
+      );
+      
+      if (response.data.success) {
+        setSubmitted(true);
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Contact form error:", error);
+      toast.error(
+        error.response?.data?.message || 
+        "Failed to send message. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass = (field) =>

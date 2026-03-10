@@ -404,7 +404,7 @@ const Cart = () => {
                     onClick={() => navigate("/place-order")}
                     className="group w-full flex items-center justify-center gap-3 bg-[#1a1a1a] text-white text-[11px] font-semibold tracking-[0.25em] uppercase py-4 rounded-full transition-colors duration-200"
                   >
-                    Proceed to Checkout
+                    Purchase Now
                     <motion.span className="transition-transform duration-200 group-hover:translate-x-1">
                       {Icons.arrowRight}
                     </motion.span>

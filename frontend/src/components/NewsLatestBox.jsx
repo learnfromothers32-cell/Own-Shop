@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 
 const NewsLatestBox = () => {
   const [email, setEmail] = useState("");
   const [focused, setFocused] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Get backend URL from context or env
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -18,13 +22,24 @@ const NewsLatestBox = () => {
 
     setLoading(true);
     try {
-      // TODO: await axios.post("/api/newsletter/subscribe", { email });
-      await new Promise((r) => setTimeout(r, 900)); // simulated delay
-      setSubmitted(true);
-      toast.success("You're in! Check your inbox for your 20% off code.");
-      setEmail("");
+      const response = await axios.post(
+        backendUrl + "/api/newsletter/subscribe",
+        { email },
+      );
+
+      if (response.data.success) {
+        setSubmitted(true);
+        toast.success(response.data.message);
+        setEmail("");
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
-      toast.error("Subscription failed. Please try again.");
+      console.error("Subscription error:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "Subscription failed. Please try again.",
+      );
     } finally {
       setLoading(false);
     }
@@ -107,7 +122,7 @@ const NewsLatestBox = () => {
           ))}
         </motion.div>
 
-        {/* Form */}
+        {/* Form - FIXED FOR MOBILE */}
         <AnimatePresence mode="wait">
           {!submitted ? (
             <motion.form
@@ -117,51 +132,53 @@ const NewsLatestBox = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.5, delay: 0.25 }}
-              className="relative flex items-center max-w-md mx-auto"
+              className="relative max-w-md mx-auto"
             >
-              {/* Input glow ring when focused */}
-              <motion.div
-                animate={{
-                  boxShadow: focused
-                    ? "0 0 0 3px rgba(139,92,246,0.25)"
-                    : "0 0 0 0px rgba(139,92,246,0)",
-                }}
-                transition={{ duration: 0.25 }}
-                className="flex-1 flex items-center bg-white/5 border border-white/10 rounded-full pl-5 pr-1 py-1 backdrop-blur-sm"
-              >
-                {/* Mail icon */}
-                <svg
-                  className="w-4 h-4 text-gray-500 shrink-0 mr-3"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  viewBox="0 0 24 24"
+              {/* Input container - fixed for mobile */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                {/* Email input with icon */}
+                <motion.div
+                  animate={{
+                    boxShadow: focused
+                      ? "0 0 0 3px rgba(139,92,246,0.25)"
+                      : "0 0 0 0px rgba(139,92,246,0)",
+                  }}
+                  transition={{ duration: 0.25 }}
+                  className="flex-1 flex items-center bg-white/5 border border-white/10 rounded-full pl-5 pr-1 py-1 backdrop-blur-sm"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  <svg
+                    className="w-4 h-4 text-gray-500 shrink-0 mr-3"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => setFocused(false)}
+                    required
+                    className="flex-1 bg-transparent text-sm text-white placeholder-gray-500 outline-none py-3 w-full"
                   />
-                </svg>
+                </motion.div>
 
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onFocus={() => setFocused(true)}
-                  onBlur={() => setFocused(false)}
-                  required
-                  className="flex-1 bg-transparent text-sm text-white placeholder-gray-500 outline-none py-3"
-                />
-
-                {/* Submit button */}
+                {/* Submit button - full width on mobile */}
                 <motion.button
                   type="submit"
                   disabled={loading}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  className="shrink-0 bg-gradient-to-r from-violet-500 to-indigo-500 text-white text-[11px] font-bold tracking-[0.2em] uppercase px-6 py-3 rounded-full transition-all hover:from-violet-400 hover:to-indigo-400 disabled:opacity-60"
+                  className="bg-gradient-to-r from-violet-500 to-indigo-500 text-white text-[11px] font-bold tracking-[0.2em] uppercase px-6 py-3 rounded-full transition-all hover:from-violet-400 hover:to-indigo-400 disabled:opacity-60 sm:w-auto w-full"
                 >
                   {loading ? (
                     <motion.span
@@ -171,13 +188,13 @@ const NewsLatestBox = () => {
                         repeat: Infinity,
                         ease: "linear",
                       }}
-                      className="block w-4 h-4 border-2 border-white/30 border-t-white rounded-full mx-3"
+                      className="block w-4 h-4 border-2 border-white/30 border-t-white rounded-full mx-auto"
                     />
                   ) : (
                     "Subscribe"
                   )}
                 </motion.button>
-              </motion.div>
+              </div>
             </motion.form>
           ) : (
             <motion.div

@@ -13,7 +13,7 @@ const FILTERS = [
   "Cables",
   "Earphones",
   "Power Banks",
-  "HeadSet"
+  "Headphones",
 ];
 
 const containerVariants = {
@@ -41,7 +41,7 @@ function LatestCollection() {
     const nonBestsellers = products.filter((item) => !item.bestSeller);
 
     const sortedByDate = [...nonBestsellers].sort((a, b) => b.date - a.date);
-    setLatestProducts(sortedByDate.slice(0, 10));
+    setLatestProducts(sortedByDate.slice(0, 507));
   }, [products]);
 
   useEffect(() => {
@@ -321,4 +321,3 @@ function LatestCollection() {
 }
 
 export default LatestCollection;
-

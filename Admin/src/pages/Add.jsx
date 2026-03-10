@@ -211,6 +211,7 @@ const ACCESSORY_CATEGORIES = [
   "Mounts",
   "Power Banks",
   "Headphones",
+  "Earphones",
   "Smart Watches",
 ];
 const DEVICE_COMPATIBILITY = [
