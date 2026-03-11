@@ -1,28 +1,81 @@
 import nodemailer from "nodemailer";
 
-// Create transporter
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: process.env.SMTP_PORT === "465",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+// Check if email credentials exist
+if (
+  !process.env.SMTP_HOST ||
+  !process.env.SMTP_USER ||
+  !process.env.SMTP_PASS
+) {
+  console.warn("⚠️ Email credentials not found in .env file");
+}
 
-// Verify connection on startup
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("SMTP connection error:", error);
-  } else {
-    console.log("✅ Email service ready to send messages");
+// Create transporter with comprehensive timeout and retry options
+const createTransporter = () => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT) || 587,
+      secure: process.env.SMTP_PORT === "465", 
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      // Critical timeout settings [citation:5][citation:10]
+      connectionTimeout: 30000,
+      greetingTimeout: 30000, 
+      socketTimeout: 60000, 
+      
+      tls: {
+        rejectUnauthorized: false, 
+        ciphers: "SSLv3",
+      },
+      // Enable debugging to see detailed logs
+      debug: true,
+      logger: true,
+    });
+
+    return transporter;
+  } catch (error) {
+    console.error("Failed to create email transporter:", error);
+    return null;
   }
-});
+};
+
+const transporter = createTransporter();
+
+// Verify connection on startup with retry logic
+export const verifyEmailConnection = async (retries = 3) => {
+  for (let i = 0; i < retries; i++) {
+    try {
+      if (!transporter) {
+        throw new Error("Transporter not initialized");
+      }
+
+      await transporter.verify();
+      console.log("✅ Email service ready to send messages");
+      return true;
+    } catch (error) {
+      console.log(
+        `⚠️ Connection attempt ${i + 1}/${retries} failed:`,
+        error.message,
+      );
+
+      if (i === retries - 1) {
+        console.error("❌ Email service failed after", retries, "attempts");
+        return false;
+      }
+
+      // Wait before retrying (exponential backoff)
+      await new Promise((resolve) =>
+        setTimeout(resolve, 2000 * Math.pow(2, i)),
+      );
+    }
+  }
+  return false;
+};
 
 // Email templates
 export const emailTemplates = {
-  // Welcome email for newsletter subscribers
   welcome: (email) => ({
     subject: "🎉 Welcome! Here's Your 20% Off",
     html: `
@@ -37,72 +90,31 @@ export const emailTemplates = {
         `,
   }),
 
-  // Contact form auto-reply
-  contactAutoReply: (name, message) => ({
-    subject: "We received your message!",
-    html: `
-            <div style="background: #0f0f0f; padding: 40px; font-family: Arial, sans-serif;">
-                <h1 style="color: white;">Hi ${name}! 👋</h1>
-                <p style="color: #9ca3af; line-height: 1.6;">Thanks for reaching out to us! We've received your message and will get back to you within 24 hours.</p>
-                <div style="background: #1a1a1a; padding: 20px; border-radius: 10px; margin: 20px 0;">
-                    <p style="color: white; margin: 0;"><strong>Your message:</strong></p>
-                    <p style="color: #9ca3af;">"${message}"</p>
-                </div>
-                <p style="color: #6b7280; font-size: 14px;">In the meantime, check out our latest collection!</p>
-            </div>
-        `,
-  }),
-
-  // Order confirmation
-  orderConfirmation: (orderDetails, total) => ({
-    subject: `✅ Order Confirmation #${orderDetails.orderId}`,
-    html: `
-            <div style="background: #0f0f0f; padding: 40px; font-family: Arial, sans-serif;">
-                <h1 style="color: white;">Thank You for Your Order! 🎉</h1>
-                <p style="color: #9ca3af;">Order #${orderDetails.orderId}</p>
-                
-                <div style="background: #1a1a1a; padding: 20px; border-radius: 10px; margin: 20px 0;">
-                    <h3 style="color: white;">Order Summary</h3>
-                    ${
-                      orderDetails.items
-                        ?.map(
-                          (item) => `
-                        <div style="display: flex; justify-content: space-between; color: #9ca3af; padding: 10px 0; border-bottom: 1px solid #333;">
-                            <span>${item.name} x${item.quantity}</span>
-                            <span>$${item.price * item.quantity}</span>
-                        </div>
-                    `,
-                        )
-                        .join("") || ""
-                    }
-                    <div style="display: flex; justify-content: space-between; color: white; font-weight: bold; padding-top: 10px;">
-                        <span>Total</span>
-                        <span>$${total}</span>
-                    </div>
-                </div>
-                
-                <p style="color: #6b7280;">We'll notify you when your order ships!</p>
-            </div>
-        `,
-  }),
-
-  // Admin notification for new contact
   adminContactNotification: (name, email, message) => ({
     subject: `📬 New Contact Message from ${name}`,
     html: `
-            <div style="font-family: Arial, sans-serif; padding: 20px;">
+            <div style="font-family: Arial, sans-serif; padding: 20px; background: #0f0f0f;">
                 <h2 style="color: #8b5cf6;">New Contact Form Submission</h2>
-                <table style="width: 100%; border-collapse: collapse;">
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;"><strong>Name:</strong></td><td style="padding: 10px; border: 1px solid #ddd;">${name}</td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;"><strong>Email:</strong></td><td style="padding: 10px; border: 1px solid #ddd;">${email}</td></tr>
-                    <tr><td style="padding: 10px; border: 1px solid #ddd;"><strong>Message:</strong></td><td style="padding: 10px; border: 1px solid #ddd;">${message}</td></tr>
-                </table>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Message:</strong> ${message}</p>
+                <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+            </div>
+        `,
+  }),
+
+  contactAutoReply: (name, message) => ({
+    subject: "We received your message!",
+    html: `
+            <div style="background: #0f0f0f; padding: 20px;">
+                <h1 style="color: white;">Hi ${name}! 👋</h1>
+                <p style="color: #9ca3af;">Thanks for contacting us! We'll reply within 24 hours.</p>
             </div>
         `,
   }),
 };
 
-// Main email sending function
+// Main email sending function with timeout handling
 export const sendEmail = async ({
   to,
   subject,
@@ -110,18 +122,46 @@ export const sendEmail = async ({
   from = process.env.FROM_EMAIL,
 }) => {
   try {
+    // Check if transporter exists
+    if (!transporter) {
+      throw new Error("Email transporter not initialized");
+    }
+
+    // Check required fields
+    if (!to || !subject || !html) {
+      throw new Error("Missing required email fields");
+    }
+
     const mailOptions = {
-      from: `"YourBrand" <${from}>`,
+      from: from
+        ? `"YourBrand" <${from}>`
+        : '"YourBrand" <noreply@yourbrand.com>',
       to,
       subject,
       html,
     };
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Email sent: ${info.messageId}`);
+    console.log(`📧 Attempting to send email to: ${to}`);
+
+    // Use Promise.race to implement our own timeout as fallback
+    const sendPromise = transporter.sendMail(mailOptions);
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("Send operation timed out")), 45000),
+    );
+
+    const info = await Promise.race([sendPromise, timeoutPromise]);
+
+    console.log(`✅ Email sent successfully: ${info.messageId}`);
     return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error("❌ Email sending failed:", error);
-    return { success: false, error: error.message };
+    return {
+      success: false,
+      error: error.message,
+      details: error,
+    };
   }
 };
+
+
+verifyEmailConnection();

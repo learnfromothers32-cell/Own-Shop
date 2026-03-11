@@ -6,6 +6,7 @@ import { ShopContext } from "../context/shopContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import MTNPaymentModal from "../components/MTNPaymentModal";
 
 /* ── Inline icons ── */
 const Icons = {
@@ -204,11 +205,10 @@ const sectionVariants = {
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showMTNModal, setShowMTNModal] = useState(false);
+  const [mtnReferenceId, setMtnReferenceId] = useState(null); // ← Add this state
 
   const context = useContext(ShopContext);
-  console.log("🔍 Full ShopContext:", context);
-  console.log("🔍 Token:", context.token);
-  console.log("🔍 UserId from context:", context.userId);
 
   const {
     navigate,
@@ -233,9 +233,6 @@ const PlaceOrder = () => {
     country: "",
     phone: "",
   });
-
-  console.log("🔍 userId from localStorage:", localStorage.getItem("userId"));
-  console.log("🔍 token from localStorage:", localStorage.getItem("token"));
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -311,10 +308,57 @@ const PlaceOrder = () => {
     } else throw new Error(response.data.message);
   };
 
+  // Updated MTN success handler
+  const handleMTNSuccess = async (referenceId) => {
+    setMtnReferenceId(referenceId);
+    setIsProcessing(true);
+    
+    try {
+      const orderItems = processCartItems();
+      
+      const orderData = {
+        address: formData,
+        items: orderItems,
+        amount: getCartAmount() + delivery_fee,
+        userId,
+        paymentReference: referenceId, // Send the MTN reference to backend
+      };
+
+      console.log("📦 Creating MTN order with data:", orderData);
+
+      const response = await axios.post(
+        `${backendUrl}/api/order/mtn`, // This calls the new MTN endpoint
+        orderData,
+        { headers: { token } },
+      );
+
+      console.log("✅ MTN order response:", response.data);
+
+      if (response.data.success) {
+        setCartItems({});
+        toast.success("Order placed successfully with MTN MoMo!");
+        navigate("/orders");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("❌ MTN order creation error:", error);
+      toast.error(error.response?.data?.message || "Order creation failed");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     if (isProcessing) return;
     if (!validateForm()) return;
+
+    if (method === "mtn") {
+      setShowMTNModal(true);
+      return;
+    }
+
     setIsProcessing(true);
     try {
       const orderItems = processCartItems();
@@ -359,7 +403,7 @@ const PlaceOrder = () => {
       onSubmit={onSubmitHandler}
       className="max-w-screen-xl mx-auto px-4 sm:px-8 pt-10 sm:pt-14 pb-20 min-h-[80vh]"
     >
-      {/* ── Breadcrumb ── */}
+      {/* Breadcrumb */}
       <motion.div
         variants={sectionVariants}
         custom={0}
@@ -382,7 +426,7 @@ const PlaceOrder = () => {
       </motion.div>
 
       <div className="flex flex-col sm:flex-row justify-between gap-12">
-        {/* ══ Left — Delivery ══ */}
+        {/* Left — Delivery */}
         <motion.div
           variants={sectionVariants}
           custom={0.05}
@@ -524,7 +568,7 @@ const PlaceOrder = () => {
           </Field>
         </motion.div>
 
-        {/* ══ Right — Summary + Payment ══ */}
+        {/* Right — Summary + Payment */}
         <motion.div
           variants={sectionVariants}
           custom={0.12}
@@ -564,7 +608,6 @@ const PlaceOrder = () => {
                     : "border-gray-200 hover:border-gray-300"
                 } ${isProcessing ? "opacity-50 cursor-not-allowed" : ""}`}
               >
-                {/* Selection indicator */}
                 <div
                   className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all duration-200 ${
                     method === "stripe"
@@ -648,6 +691,67 @@ const PlaceOrder = () => {
                   />
                 )}
               </motion.div>
+
+              {/* MTN MoMo */}
+              <motion.div
+                whileHover={!isProcessing ? { scale: 1.01 } : {}}
+                whileTap={!isProcessing ? { scale: 0.99 } : {}}
+                onClick={() => !isProcessing && setMethod("mtn")}
+                className={`relative flex items-center gap-4 border rounded-xl p-4 cursor-pointer transition-all duration-200 ${
+                  method === "mtn"
+                    ? "border-yellow-500 bg-yellow-50"
+                    : "border-gray-200 hover:border-gray-300"
+                } ${isProcessing ? "opacity-50 cursor-not-allowed" : ""}`}
+              >
+                <div
+                  className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all duration-200 ${
+                    method === "mtn"
+                      ? "border-yellow-500 bg-yellow-500"
+                      : "border-gray-300"
+                  }`}
+                >
+                  <AnimatePresence>
+                    {method === "mtn" && (
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 20,
+                        }}
+                        className="text-white"
+                      >
+                        {Icons.check}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">📱</span>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800">
+                      MTN Mobile Money
+                    </p>
+                    <p className="text-[10px] text-gray-500">
+                      Pay with your MoMo wallet
+                    </p>
+                  </div>
+                </div>
+
+                <span className="ml-auto inline-flex items-center px-2 py-0.5 rounded-full bg-yellow-50 border border-yellow-100 text-[10px] font-semibold text-yellow-700 tracking-wide">
+                  Instant
+                </span>
+
+                {method === "mtn" && (
+                  <motion.div
+                    layoutId="payment-accent"
+                    className="absolute top-0 left-0 right-0 h-[1.5px] bg-yellow-500 rounded-t-xl"
+                  />
+                )}
+              </motion.div>
             </div>
           </div>
 
@@ -699,7 +803,6 @@ const PlaceOrder = () => {
               </AnimatePresence>
             </motion.button>
 
-            {/* Trust line */}
             <p className="flex items-center justify-center gap-1.5 text-[10px] text-gray-400 tracking-wide">
               {Icons.lock}
               Secure checkout · SSL encrypted · Free returns
@@ -707,6 +810,19 @@ const PlaceOrder = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* MTN Payment Modal */}
+      <MTNPaymentModal
+        isOpen={showMTNModal}
+        onClose={() => setShowMTNModal(false)}
+        orderDetails={{
+          orderId: `ORD${Date.now()}`,
+          amount: getCartAmount() + delivery_fee,
+          customerName: `${formData.firstName} ${formData.lastName}`,
+          customerEmail: formData.email,
+        }}
+        onPaymentSuccess={handleMTNSuccess}
+      />
     </form>
   );
 };
