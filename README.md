@@ -1,39 +1,42 @@
-🛒 Complete E-commerce Platform for Phone accessories Shop 
-A full-stack e-commerce solution built with the MERN stack (MongoDB, Express.js, React, Node.js) featuring MTN Mobile Money payment integration, Stripe payments, and a comprehensive admin dashboard.
+🛒 Complete E-commerce Platform for Phone Accessories Shop
+
+A full-stack e-commerce solution built with the MERN Stack (MongoDB, Express.js, React, Node.js) featuring MTN Mobile Money integration, Stripe payments, and a comprehensive admin dashboard.
 
 ✨ Features
 🛍️ Customer Features
-User Authentication - Register/Login with JWT
 
-Product Browsing - Browse products with categories
+User Authentication – Register/Login using JWT
 
-Shopping Cart - Add/remove items, update quantities
+Product Browsing – Browse products by categories
 
-Multiple Payment Methods:
+Shopping Cart – Add/remove items and update quantities
 
-💳 Stripe - Card payments
+Multiple Payment Methods
 
-📱 MTN Mobile Money - Direct MoMo payments
+💳 Stripe – Card payments
 
-💵 Cash on Delivery - Pay when you receive
+📱 MTN Mobile Money – Direct MoMo payments
 
-Order Management - View order history and status
+💵 Cash on Delivery – Pay when you receive
 
-Email Notifications - Order confirmations, newsletters
+Order Management – View order history and status
+
+Email Notifications – Order confirmations and newsletters
 
 👑 Admin Features
-Dashboard - Overview of sales, orders, users
 
-Product Management - Add/edit/delete products
+Dashboard – Overview of sales, orders, and users
 
-Order Management - View and update order status
+Product Management – Add, edit, and delete products
 
-User Management - View registered users
+Order Management – View and update order status
 
-Analytics - Sales reports and insights
+User Management – View registered users
+
+Analytics – Sales reports and insights
 
 💰 Payment Integrations
-MTN Mobile Money (Ghana - GHS)
+📱 MTN Mobile Money (Ghana – GHS)
 
 Sandbox testing environment
 
@@ -43,72 +46,78 @@ Automatic payment confirmation
 
 Real-time order updates
 
-Stripe (International cards)
+💳 Stripe
 
-Cash on Delivery (Local option)
+Supports international card payments
+
+💵 Cash on Delivery
+
+Local payment option for customers
 
 🚀 Tech Stack
 Frontend
-React 18 with Vite
 
-Framer Motion (animations)
+React 18 (Vite)
+
+Framer Motion – animations
 
 React Router v6
 
-Axios for API calls
+Axios – API calls
 
-React Toastify (notifications)
+React Toastify – notifications
 
-Tailwind CSS (styling)
+Tailwind CSS – styling
 
 Backend
-Node.js with Express
+
+Node.js
+
+Express.js
 
 MongoDB with Mongoose
 
 JWT Authentication
 
-Nodemailer (emails)
+Nodemailer – email services
 
 Stripe SDK
 
-MTN MoMo API (via mtnapimomo)
+MTN MoMo API via mtnapimomo
 
 📋 Prerequisites
-Before you begin, ensure you have:
 
-Node.js (v14 or higher)
+Before running the project ensure you have:
 
-MongoDB (local or Atlas)
+Node.js v14 or higher
 
-Stripe account (for card payments)
+MongoDB (local or MongoDB Atlas)
+
+Stripe account
 
 MTN Developer Account (for MoMo payments)
 
 Git
 
 🔧 Installation
-1. Clone the Repository
-bash
+1️⃣ Clone the Repository
 git clone https://github.com/yourusername/e-commerce.git
 cd e-commerce
-2. Install Backend Dependencies
-bash
+2️⃣ Install Backend Dependencies
 cd backend
 npm install
-3. Install Frontend Dependencies
-bash
+3️⃣ Install Frontend Dependencies
 cd ../frontend
 npm install
-4. Install Admin Panel Dependencies (if applicable)
-bash
+4️⃣ Install Admin Panel Dependencies
 cd ../Admin
 npm install
 ⚙️ Environment Configuration
 Backend .env
-Create backend/.env:
 
-env
+Create a file:
+
+backend/.env
 # Server Configuration
 PORT=4000
 FRONTEND_URL=http://localhost:5173
@@ -120,7 +129,7 @@ MONGODB_URI=your_mongodb_connection_string
 # JWT
 JWT_SECRET=your_jwt_secret
 
-# Cloudinary (for image uploads)
+# Cloudinary (image uploads)
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
@@ -128,7 +137,7 @@ CLOUDINARY_API_SECRET=your_api_secret
 # Stripe
 STRIPE_SECRET_KEY=your_stripe_secret_key
 
-# Email Configuration (Brevo/Sendinblue)
+# Email Configuration (Brevo / Sendinblue)
 SMTP_HOST=smtp-relay.brevo.com
 SMTP_PORT=587
 SMTP_USER=your_smtp_user
@@ -144,191 +153,188 @@ MTN_CURRENCY=GHS
 MTN_API_USER=your_api_user
 MTN_API_KEY=your_api_key
 Frontend .env
-Create frontend/.env:
 
-env
+Create:
+
+frontend/.env
 VITE_BACKEND_URL=http://localhost:4000
 🚀 Running the Application
 Start Backend
-bash
 cd backend
 npm run dev
-Server runs on http://localhost:4000
 
+Server runs on:
+
+http://localhost:4000
 Start Frontend
-bash
 cd frontend
 npm run dev
-Frontend runs on http://localhost:5173
 
+Frontend runs on:
+
+http://localhost:5173
 Start Admin Panel
-bash
 cd Admin
 npm run dev
-Admin runs on http://localhost:5174
 
+Admin dashboard runs on:
+
+http://localhost:5174
 📱 MTN MoMo Integration Guide
 Sandbox Testing
-Create MTN Developer Account at momodeveloper.mtn.com
+
+Create an account at
+https://momodeveloper.mtn.com
 
 Subscribe to Collections API
 
-Get your Subscription Key from the dashboard
+Get your Subscription Key
 
-Generate API User and Key using the included script:
+Generate API User & API Key
 
-bash
 cd backend
 node mtn-manual-setup.js
-Update your .env with the generated credentials
 
-Test with any phone number (e.g., 0240000000)
+Update your .env file with generated credentials.
 
-Going Live (Production)
-Complete KYC with MTN
-
-Submit Go Live application
-
-Receive Partner Portal credentials
-
-Generate production API keys
-
-Update environment variables:
-
-env
-MTN_API_BASE_URL=https://proxy.momoapi.mtn.com
-MTN_API_ENVIRONMENT=mtnghana  # or your country code
-📁 Project Structure
-text
-e-commerce/
-├── backend/
-│   ├── controllers/        # Business logic
-│   │   └── orderControllers.js  # MTN payment logic
-│   ├── models/             # Database models
-│   ├── routes/             # API routes
-│   │   └── orderRoutes.js  # MTN endpoints
-│   ├── utils/              # Utilities
-│   │   ├── emailService.js # Email handling
-│   │   └── mtnMomoService.js # MTN integration
-│   └── server.js           # Main server file
-├── frontend/
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   │   └── MTNPaymentModal.jsx
-│   │   ├── pages/          # Page components
-│   │   │   └── PlaceOrder.jsx
-│   │   └── context/        # State management
-│   └── index.html
-└── Admin/                   # Admin dashboard
-🧪 Testing MTN Payments
-Sandbox Test Numbers
-Phone Number	Expected Result
+Test Numbers
+Phone Number	Result
 0240000000	✅ Successful payment
 0240000001	⏳ Payment pending
 0240000002	❌ Payment failed
 Any other	✅ Immediate success
-Test the Flow
+Testing Flow
+
 Add items to cart
 
 Proceed to checkout
 
 Fill delivery information
 
-Select "MTN Mobile Money"
+Select MTN Mobile Money
 
 Enter phone number
 
-Click "Pay Now"
+Click Pay Now
 
-Order should be created successfully
+Order should be created successfully.
 
+📁 Project Structure
+e-commerce
+│
+├── backend
+│   ├── controllers
+│   │   └── orderControllers.js
+│   ├── models
+│   ├── routes
+│   │   └── orderRoutes.js
+│   ├── utils
+│   │   ├── emailService.js
+│   │   └── mtnMomoService.js
+│   └── server.js
+│
+├── frontend
+│   ├── src
+│   │   ├── components
+│   │   │   └── MTNPaymentModal.jsx
+│   │   ├── pages
+│   │   │   └── PlaceOrder.jsx
+│   │   └── context
+│   └── index.html
+│
+└── Admin
+🧪 Testing MTN Payments
+
+Test using sandbox numbers and verify payment status using:
+
+GET /api/mtn/status/:ref
 🛠️ Troubleshooting
-Common Issues
-MTN Modal not opening
+MTN Modal Not Opening
 
-Check browser console for errors
+Check browser console errors
 
-Ensure showMTNModal state is updating
+Verify showMTNModal state
 
-Verify MTNPaymentModal component is imported
+Ensure MTNPaymentModal is imported
 
-Payment succeeds but order not created
+Payment Success but Order Not Created
 
-Check backend logs for errors
+Check backend logs
 
-Verify /api/order/mtn endpoint exists
+Verify /api/order/mtn endpoint
 
-Ensure placeOrderMTN function is exported
+Confirm placeOrderMTN function is exported
 
-"Form cannot be a descendant of form" error
+SMTP Errors
 
-Fixed in latest version - ensure inner form is removed
-
-SMTP connection errors
-
-Check .env email credentials
+Verify email credentials in .env
 
 Try port 2525 instead of 587
 
-Verify Brevo account is active
+Confirm Brevo account is active
 
 📝 API Endpoints
-Order Routes
-text
-POST /api/order/place        # Cash on Delivery
-POST /api/order/stripe       # Stripe payment
-POST /api/order/mtn          # MTN MoMo payment
-POST /api/order/verifyStripe # Verify Stripe payment
-GET  /api/order/userOrders   # Get user orders
-MTN Specific
-text
-POST /api/mtn/pay            # Initiate MTN payment
-GET  /api/mtn/status/:ref    # Check payment status
+Orders
+POST /api/order/place
+POST /api/order/stripe
+POST /api/order/mtn
+POST /api/order/verifyStripe
+GET  /api/order/userOrders
+MTN
+POST /api/mtn/pay
+GET  /api/mtn/status/:ref
 🔒 Security Best Practices
-✅ Never commit .env files to GitHub
 
-✅ Use environment variables for all secrets
+Never commit .env files
 
-✅ Validate all user inputs
+Use environment variables for secrets
 
-✅ Implement rate limiting
+Validate user inputs
 
-✅ Use HTTPS in production
+Implement rate limiting
 
-✅ Keep dependencies updated
+Use HTTPS in production
+
+Keep dependencies updated
 
 🚀 Deployment
-Backend (Render/Heroku)
+Backend (Render / Heroku)
+
 Push code to GitHub
 
-Connect to Render/Heroku
+Connect repository
 
 Add environment variables
 
 Deploy
 
-Frontend (Vercel/Netlify)
-Build command: npm run build
-
-Publish directory: dist
-
-Add environment variables
-
+Frontend (Vercel / Netlify)
+Build Command: npm run build
+Publish Directory: dist
 🤝 Contributing
+
 Fork the repository
 
-Create your feature branch (git checkout -b feature/AmazingFeature)
+Create a feature branch
 
-Commit your changes (git commit -m 'Add some AmazingFeature')
+git checkout -b feature/AmazingFeature
 
-Push to the branch (git push origin feature/AmazingFeature)
+Commit changes
+
+git commit -m "Add AmazingFeature"
+
+Push changes
+
+git push origin feature/AmazingFeature
 
 Open a Pull Request
 
 📄 License
-This project is licensed under the MIT License.
 
-🙏 Acknowledgments
+Licensed under the MIT License.
+
+🙏 Acknowledgements
+
 MTN MoMo API Documentation
 
 Stripe API
@@ -338,13 +344,16 @@ Nodemailer
 Framer Motion
 
 📞 Support
-For MTN MoMo integration support:
 
-📧 MTN Ghana: mmcommercial.GH@mtn.com
+MTN Ghana Email
 
-💬 MTN Developer Community: https://momodevelopercommunity.mtn.com/
+mmcommercial.GH@mtn.com
 
+Developer Community
+
+https://momodevelopercommunity.mtn.com
 🎯 Roadmap
+
 Basic e-commerce functionality
 
 MTN MoMo integration
@@ -353,7 +362,7 @@ Stripe payments
 
 Email notifications
 
-Mobile app (React Native)
+React Native mobile app
 
 Multi-currency support
 
@@ -361,5 +370,4 @@ Advanced analytics dashboard
 
 Inventory management
 
-Built with ❤️ using the MERN stack
-
+❤️ Built with the MERN Stack
