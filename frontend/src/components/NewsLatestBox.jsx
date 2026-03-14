@@ -9,7 +9,7 @@ const NewsLatestBox = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Get backend URL from context or env
+  // Get backend URL from env
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const onSubmitHandler = async (event) => {

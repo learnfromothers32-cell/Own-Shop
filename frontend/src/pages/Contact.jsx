@@ -3,9 +3,8 @@ import Title from "../components/Title";
 import { assets } from "../assets/assets";
 import { motion, AnimatePresence } from "framer-motion";
 import NewsLatestBox from "../components/NewsLatestBox";
-import axios from "axios"; // ✅ Added
-import { toast } from "react-toastify"; // ✅ Added
-
+import axios from "axios"; 
+import { toast } from "react-toastify"; 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i = 0) => ({
@@ -75,7 +74,7 @@ const Contact = () => {
   // ✅ UPDATED: Real API call to backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validation
     if (!formState.name || !formState.email || !formState.message) {
       toast.error("Please fill in all required fields");
@@ -83,19 +82,16 @@ const Contact = () => {
     }
 
     setLoading(true);
-    
+
     try {
       const backendUrl = import.meta.env.VITE_BACKEND_URL;
-      
-      const response = await axios.post(
-        `${backendUrl}/api/contact/send`,
-        {
-          name: formState.name,
-          email: formState.email,
-          message: formState.message
-        }
-      );
-      
+
+      const response = await axios.post(`${backendUrl}/api/contact/send`, {
+        name: formState.name,
+        email: formState.email,
+        message: formState.message,
+      });
+
       if (response.data.success) {
         setSubmitted(true);
         toast.success(response.data.message);
@@ -105,8 +101,8 @@ const Contact = () => {
     } catch (error) {
       console.error("Contact form error:", error);
       toast.error(
-        error.response?.data?.message || 
-        "Failed to send message. Please try again."
+        error.response?.data?.message ||
+          "Failed to send message. Please try again.",
       );
     } finally {
       setLoading(false);

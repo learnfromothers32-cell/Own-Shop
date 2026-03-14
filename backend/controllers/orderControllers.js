@@ -3,7 +3,7 @@ import userModel from "../models/userModel.js";
 import Stripe from "stripe";
 
 // global variables
-const currency = "inr";
+const currency = "GHC";
 const deliveryCharges = 100;
 
 // Gateway Initialize
@@ -224,11 +224,10 @@ const updateStatus = async (req, res) => {
   }
 };
 
-// ✅ EXPORT ALL FUNCTIONS - MAKE SURE placeOrderMTN IS HERE!
 export {
   placeOrder,
   placeOrderStripe,
-  placeOrderMTN, // ← THIS MUST BE HERE!
+  placeOrderMTN, 
   allOrders,
   userOrders,
   updateStatus,

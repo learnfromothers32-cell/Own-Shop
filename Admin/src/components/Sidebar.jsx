@@ -22,8 +22,18 @@ const NAV_ITEMS = [
     accent: "bg-violet-500",
     glowColor: "rgba(139,92,246,0.15)",
     icon: (
-      <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <svg
+        className="w-4 h-4 shrink-0"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
       </svg>
     ),
   },
@@ -34,8 +44,18 @@ const NAV_ITEMS = [
     accent: "bg-blue-500",
     glowColor: "rgba(59,130,246,0.15)",
     icon: (
-      <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+      <svg
+        className="w-4 h-4 shrink-0"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+        />
       </svg>
     ),
   },
@@ -46,8 +66,18 @@ const NAV_ITEMS = [
     accent: "bg-emerald-500",
     glowColor: "rgba(16,185,129,0.15)",
     icon: (
-      <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-.375c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v.375c0 .621.504 1.125 1.125 1.125z" />
+      <svg
+        className="w-4 h-4 shrink-0"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-.375c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v.375c0 .621.504 1.125 1.125 1.125z"
+        />
       </svg>
     ),
   },
@@ -56,7 +86,11 @@ const NAV_ITEMS = [
 /* ── Animations ───────────────────────────────────────────────────── */
 const sidebarAnim = {
   hidden: { opacity: 0, x: -28 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+  },
 };
 const listAnim = {
   hidden: {},
@@ -64,14 +98,20 @@ const listAnim = {
 };
 const itemAnim = {
   hidden: { opacity: 0, x: -14 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+  },
 };
 
 /* ════════════════════════════════════════════════════════════════════
    SIDEBAR
 ════════════════════════════════════════════════════════════════════ */
 function Sidebar() {
-  useEffect(() => { injectFonts(); }, []);
+  useEffect(() => {
+    injectFonts();
+  }, []);
 
   return (
     <motion.aside
@@ -86,16 +126,29 @@ function Sidebar() {
         <div className="flex items-center gap-3">
           {/* icon mark */}
           <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-            <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <svg
+              className="w-3.5 h-3.5 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
             </svg>
           </div>
           {/* wordmark */}
           <div className="hidden md:flex flex-col leading-none">
-            <span className="text-[13px] font-extrabold text-white tracking-tight">Admin</span>
-            <span className="text-[9px] font-bold text-white/30 tracking-[0.2em] uppercase mt-0.5"
-              style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+            <span className="text-[13px] font-extrabold text-white tracking-tight">
+              Admin
+            </span>
+            <span
+              className="text-[9px] font-bold text-white/30 tracking-[0.2em] uppercase mt-0.5"
+              style={{ fontFamily: "'JetBrains Mono', monospace" }}
+            >
               Dashboard
             </span>
           </div>
@@ -105,8 +158,10 @@ function Sidebar() {
       {/* ── NAV LABEL ── */}
       <div className="hidden md:flex items-center gap-2.5 px-5 pt-6 pb-3">
         <div className="h-px flex-1 bg-white/[0.06]" />
-        <span className="text-[9px] font-bold tracking-[0.25em] uppercase text-white/20 flex-shrink-0"
-          style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+        <span
+          className="text-[9px] font-bold tracking-[0.25em] uppercase text-white/20 flex-shrink-0"
+          style={{ fontFamily: "'JetBrains Mono', monospace" }}
+        >
           Menu
         </span>
         <div className="h-px flex-1 bg-white/[0.06]" />
@@ -125,7 +180,10 @@ function Sidebar() {
             <NavLink to={to}>
               {({ isActive }) => (
                 <motion.div
-                  whileHover={{ x: isActive ? 0 : 3, transition: { duration: 0.2 } }}
+                  whileHover={{
+                    x: isActive ? 0 : 3,
+                    transition: { duration: 0.2 },
+                  }}
                   whileTap={{ scale: 0.97 }}
                   className="relative flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer overflow-hidden transition-colors duration-200"
                   style={{
@@ -149,17 +207,22 @@ function Sidebar() {
                   </AnimatePresence>
 
                   {/* Icon container */}
-                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200
-                    ${isActive
-                      ? "bg-white/10 text-white"
-                      : "bg-transparent text-white/25 group-hover:text-white/50"
-                    }`}>
+                  <div
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200
+                    ${
+                      isActive
+                        ? "bg-white/10 text-white"
+                        : "bg-transparent text-white/25 group-hover:text-white/50"
+                    }`}
+                  >
                     {icon}
                   </div>
 
                   {/* Label */}
-                  <span className={`hidden md:block text-[12px] font-semibold tracking-wide transition-colors duration-200 truncate
-                    ${isActive ? "text-white" : "text-white/35 hover:text-white/60"}`}>
+                  <span
+                    className={`hidden md:block text-[12px] font-semibold tracking-wide transition-colors duration-200 truncate
+                    ${isActive ? "text-white" : "text-white/35 hover:text-white/60"}`}
+                  >
                     {label}
                   </span>
 
@@ -168,8 +231,13 @@ function Sidebar() {
                     <motion.div
                       layoutId="sidebar-dot"
                       className={`md:hidden absolute right-2 w-1.5 h-1.5 rounded-full ${accent}`}
-                      initial={{ scale: 0 }} animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 20,
+                      }}
                     />
                   )}
 
@@ -183,8 +251,18 @@ function Sidebar() {
                         transition={{ duration: 0.2 }}
                         className="hidden md:flex ml-auto flex-shrink-0"
                       >
-                        <svg className="w-3 h-3 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                        <svg
+                          className="w-3 h-3 text-white/30"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2.5}
+                            d="M9 5l7 7-7 7"
+                          />
                         </svg>
                       </motion.div>
                     )}
@@ -206,15 +284,19 @@ function Sidebar() {
         {/* status pill */}
         <div className="flex items-center justify-center md:justify-start gap-2 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.06]">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
-          <span className="hidden md:block text-[9px] font-bold tracking-[0.2em] uppercase text-white/25"
-            style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+          <span
+            className="hidden md:block text-[9px] font-bold tracking-[0.2em] uppercase text-white/25"
+            style={{ fontFamily: "'JetBrains Mono', monospace" }}
+          >
             System Online
           </span>
         </div>
 
         {/* version */}
-        <p className="hidden md:block text-center text-[9px] font-bold tracking-[0.2em] uppercase text-white/10 mt-3"
-          style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+        <p
+          className="hidden md:block text-center text-[9px] font-bold tracking-[0.2em] uppercase text-white/10 mt-3"
+          style={{ fontFamily: "'JetBrains Mono', monospace" }}
+        >
           Admin v1.0
         </p>
       </motion.div>

@@ -8,9 +8,8 @@ import userRouter from "./routes/userRoute.js";
 import productRouter from "./routes/productRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
-import newsletterRouter from "./routes/newsletterRoutes.js"; // Add this
-import contactRouter from "./routes/contactRoutes.js"; // Add this
-
+import newsletterRouter from "./routes/newsletterRoutes.js"; 
+import contactRouter from "./routes/contactRoutes.js";
 // App Config
 const app = express();
 const port = process.env.PORT || 4000;
@@ -27,8 +26,8 @@ app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
-app.use("/api/newsletter", newsletterRouter); // Add this
-app.use("/api/contact", contactRouter); // Add this
+app.use("/api/newsletter", newsletterRouter); 
+app.use("/api/contact", contactRouter);
 
 
 app.get("/", (req, res) => {

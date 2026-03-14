@@ -1,167 +1,117 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 
-// Check if email credentials exist
-if (
-  !process.env.SMTP_HOST ||
-  !process.env.SMTP_USER ||
-  !process.env.SMTP_PASS
-) {
-  console.warn("⚠️ Email credentials not found in .env file");
-}
+// Create transporter with Brevo SMTP
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: parseInt(process.env.SMTP_PORT || '587'),
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false, // Only for development
+  },
+});
 
-// Create transporter with comprehensive timeout and retry options
-const createTransporter = () => {
-  try {
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT) || 587,
-      secure: process.env.SMTP_PORT === "465", 
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-      // Critical timeout settings [citation:5][citation:10]
-      connectionTimeout: 30000,
-      greetingTimeout: 30000, 
-      socketTimeout: 60000, 
-      
-      tls: {
-        rejectUnauthorized: false, 
-        ciphers: "SSLv3",
-      },
-      // Enable debugging to see detailed logs
-      debug: true,
-      logger: true,
-    });
-
-    return transporter;
-  } catch (error) {
-    console.error("Failed to create email transporter:", error);
-    return null;
+// Verify connection configuration
+transporter.verify(function(error, success) {
+  if (error) {
+    console.log('❌ SMTP Connection Error:', error);
+  } else {
+    console.log('✅ SMTP Server is ready to send emails');
   }
-};
+});
 
-const transporter = createTransporter();
-
-// Verify connection on startup with retry logic
-export const verifyEmailConnection = async (retries = 3) => {
-  for (let i = 0; i < retries; i++) {
-    try {
-      if (!transporter) {
-        throw new Error("Transporter not initialized");
-      }
-
-      await transporter.verify();
-      console.log("✅ Email service ready to send messages");
-      return true;
-    } catch (error) {
-      console.log(
-        `⚠️ Connection attempt ${i + 1}/${retries} failed:`,
-        error.message,
-      );
-
-      if (i === retries - 1) {
-        console.error("❌ Email service failed after", retries, "attempts");
-        return false;
-      }
-
-      // Wait before retrying (exponential backoff)
-      await new Promise((resolve) =>
-        setTimeout(resolve, 2000 * Math.pow(2, i)),
-      );
-    }
-  }
-  return false;
-};
-
-// Email templates
-export const emailTemplates = {
-  welcome: (email) => ({
-    subject: "🎉 Welcome! Here's Your 20% Off",
-    html: `
-            <div style="background: #0f0f0f; padding: 40px; font-family: Arial, sans-serif;">
-                <h1 style="color: white; text-align: center;">Welcome to the Family! 🎉</h1>
-                <div style="background: linear-gradient(135deg, #8b5cf6, #6366f1); padding: 30px; border-radius: 15px; text-align: center; margin: 30px 0;">
-                    <h2 style="color: white; margin: 0;">Your 20% Off Code:</h2>
-                    <h1 style="color: white; font-size: 48px; letter-spacing: 4px; margin: 10px 0;">WELCOME20</h1>
-                </div>
-                <p style="color: #9ca3af; text-align: center;">Use this code on your first order!</p>
-            </div>
-        `,
-  }),
-
-  adminContactNotification: (name, email, message) => ({
-    subject: `📬 New Contact Message from ${name}`,
-    html: `
-            <div style="font-family: Arial, sans-serif; padding: 20px; background: #0f0f0f;">
-                <h2 style="color: #8b5cf6;">New Contact Form Submission</h2>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Message:</strong> ${message}</p>
-                <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
-            </div>
-        `,
-  }),
-
-  contactAutoReply: (name, message) => ({
-    subject: "We received your message!",
-    html: `
-            <div style="background: #0f0f0f; padding: 20px;">
-                <h1 style="color: white;">Hi ${name}! 👋</h1>
-                <p style="color: #9ca3af;">Thanks for contacting us! We'll reply within 24 hours.</p>
-            </div>
-        `,
-  }),
-};
-
-// Main email sending function with timeout handling
-export const sendEmail = async ({
-  to,
-  subject,
-  html,
-  from = process.env.FROM_EMAIL,
-}) => {
+export const sendEmail = async ({ to, subject, html }) => {
   try {
-    // Check if transporter exists
-    if (!transporter) {
-      throw new Error("Email transporter not initialized");
-    }
-
-    // Check required fields
-    if (!to || !subject || !html) {
-      throw new Error("Missing required email fields");
-    }
-
+    console.log('📧 Attempting to send email:', { to, subject });
+    
     const mailOptions = {
-      from: from
-        ? `"YourBrand" <${from}>`
-        : '"YourBrand" <noreply@yourbrand.com>',
+      from: `"Your Store" <${process.env.FROM_EMAIL || process.env.SMTP_USER}>`,
       to,
       subject,
       html,
     };
 
-    console.log(`📧 Attempting to send email to: ${to}`);
-
-    // Use Promise.race to implement our own timeout as fallback
-    const sendPromise = transporter.sendMail(mailOptions);
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Send operation timed out")), 45000),
-    );
-
-    const info = await Promise.race([sendPromise, timeoutPromise]);
-
-    console.log(`✅ Email sent successfully: ${info.messageId}`);
+    const info = await transporter.sendMail(mailOptions);
+    console.log('✅ Email sent successfully:', info.messageId);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error("❌ Email sending failed:", error);
-    return {
-      success: false,
+    console.error('❌ Email sending failed:', error);
+    return { 
+      success: false, 
       error: error.message,
-      details: error,
+      details: error 
     };
   }
 };
 
+export const emailTemplates = {
+  welcome: (email) => ({
+    subject: '🎉 Welcome! Here\'s Your 20% Off Code',
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+          .content { background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }
+          .code { background: #e0e7ff; color: #4f46e5; padding: 15px; font-size: 24px; font-weight: bold; text-align: center; border-radius: 8px; margin: 20px 0; letter-spacing: 2px; }
+          .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 12px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>Welcome to Our Store! 🎉</h1>
+          </div>
+          <div class="content">
+            <p>Hi there,</p>
+            <p>Thanks for subscribing to our newsletter! We're excited to have you on board.</p>
+            <p>Here's your exclusive 20% off code for your first order:</p>
+            <div class="code">WELCOME20</div>
+            <p>This code is valid for 30 days and can be applied at checkout.</p>
+            <p>Stay tuned for:</p>
+            <ul>
+              <li>✨ Early access to new drops</li>
+              <li>🔥 Members-only deals</li>
+              <li>🎁 Exclusive offers</li>
+            </ul>
+            <p>Happy shopping!</p>
+          </div>
+          <div class="footer">
+            <p>© 2024 Your Store. All rights reserved.</p>
+            <p>If you didn't subscribe to our newsletter, you can ignore this email.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+  }),
 
-verifyEmailConnection();
+  adminContactNotification: (name, email, message) => ({
+    subject: `📧 New Contact Form Message from ${name}`,
+    html: `
+      <h2>New Contact Form Submission</h2>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Message:</strong></p>
+      <p>${message}</p>
+    `,
+  }),
+
+  contactAutoReply: (name, message) => ({
+    subject: '🙏 Thank You for Contacting Us',
+    html: `
+      <h2>Hello ${name},</h2>
+      <p>Thank you for reaching out to us. We have received your message:</p>
+      <p><em>"${message}"</em></p>
+      <p>We'll get back to you within 24 hours.</p>
+      <p>Best regards,<br>The Team</p>
+    `,
+  }),
+};
