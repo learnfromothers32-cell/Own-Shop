@@ -29,7 +29,7 @@ function BestSeller() {
 
   useEffect(() => {
     const best = products.filter((item) => item.bestSeller);
-    setBestSeller(best.slice(0, 10));
+    setBestSeller(best.slice(0, 12));
   }, [products]);
 
   const [hero, ...rest] = bestSeller;

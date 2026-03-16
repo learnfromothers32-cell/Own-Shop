@@ -41,7 +41,7 @@ function LatestCollection() {
     const nonBestsellers = products.filter((item) => !item.bestSeller);
 
     const sortedByDate = [...nonBestsellers].sort((a, b) => b.date - a.date);
-    setLatestProducts(sortedByDate.slice(0, 507));
+    setLatestProducts(sortedByDate.slice(0, 12));
   }, [products]);
 
   useEffect(() => {
