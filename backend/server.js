@@ -1,4 +1,3 @@
-
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
@@ -8,8 +7,9 @@ import userRouter from "./routes/userRoute.js";
 import productRouter from "./routes/productRoutes.js";
 import cartRouter from "./routes/cartRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
-import newsletterRouter from "./routes/newsletterRoutes.js"; 
+import newsletterRouter from "./routes/newsletterRoutes.js";
 import contactRouter from "./routes/contactRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
 // App Config
 const app = express();
 const port = process.env.PORT || 4000;
@@ -26,9 +26,9 @@ app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
-app.use("/api/newsletter", newsletterRouter); 
+app.use("/api/newsletter", newsletterRouter);
 app.use("/api/contact", contactRouter);
-
+app.use("/api/admin", adminRouter);
 
 app.get("/", (req, res) => {
   res.send("API Working....");
