@@ -343,6 +343,16 @@ const OrderCard = ({ order, updating, onStatusUpdate }) => {
                       {order.items?.map((item, idx) => (
                         <div key={idx} className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
+                            {/* Item image — small screens only */}
+                            {item.image && (
+                              <div className="md:hidden w-10 h-10 rounded-lg border border-slate-200 overflow-hidden bg-slate-50 flex-shrink-0">
+                                <img
+                                  src={Array.isArray(item.image) ? item.image[0] : item.image}
+                                  alt={item.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            )}
                             <span className="w-6 h-6 rounded-md bg-white border border-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-600 shadow-sm flex-shrink-0"
                               style={{ fontFamily: "'JetBrains Mono', monospace" }}>
                               {item.quantity}
