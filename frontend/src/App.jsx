@@ -27,6 +27,9 @@ import TrackOrder from "./pages/Delivery";
 import Terms from "./pages/Privacy"; 
 import Cookies from "./pages/Privacy"; 
 
+// ✅ ADDING THIS IMPORT for Google Analytics
+import ReactGA from "react-ga4";
+
 // ScrollToTop component
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -42,6 +45,37 @@ const ScrollToTop = () => {
 };
 
 const App = () => {
+  const location = useLocation();
+
+  // ✅ ADD THIS useEffect for Google Analytics initialization
+  useEffect(() => {
+    const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+    if (measurementId) {
+      ReactGA.initialize(measurementId);
+      console.log("✅ Google Analytics initialized");
+      
+      // Send initial page view
+      ReactGA.send({ 
+        hitType: "pageview", 
+        page: location.pathname + location.search 
+      });
+    } else {
+      console.warn("⚠️ VITE_GA_MEASUREMENT_ID not found in environment");
+    }
+  }, []);
+
+  // ✅ ADD THIS useEffect for tracking page views on route changes
+  useEffect(() => {
+    const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+    if (measurementId) {
+      ReactGA.send({ 
+        hitType: "pageview", 
+        page: location.pathname + location.search 
+      });
+      console.log("📊 Page view tracked:", location.pathname);
+    }
+  }, [location]);
+
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
       <ToastContainer />
