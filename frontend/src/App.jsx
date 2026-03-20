@@ -21,11 +21,11 @@ import FAQ from "./pages/FAQ";
 import Delivery from "./pages/Delivery";
 import Privacy from "./pages/Privacy";
 
-import Returns from "./pages/Delivery"; 
+import Returns from "./pages/Delivery";
 import SizeGuide from "./pages/Delivery";
-import TrackOrder from "./pages/Delivery"; 
-import Terms from "./pages/Privacy"; 
-import Cookies from "./pages/Privacy"; 
+import TrackOrder from "./pages/Delivery";
+import Terms from "./pages/Privacy";
+import Cookies from "./pages/Privacy";
 
 // ✅ ADDING THIS IMPORT for Google Analytics
 import ReactGA from "react-ga4";
@@ -37,7 +37,7 @@ const ScrollToTop = () => {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth" 
+      behavior: "smooth",
     });
   }, [pathname]);
 
@@ -47,30 +47,30 @@ const ScrollToTop = () => {
 const App = () => {
   const location = useLocation();
 
-  // ✅ ADD THIS useEffect for Google Analytics initialization
+  // ✅ Google Analytics initialization
   useEffect(() => {
     const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
     if (measurementId) {
       ReactGA.initialize(measurementId);
       console.log("✅ Google Analytics initialized");
-      
+
       // Send initial page view
-      ReactGA.send({ 
-        hitType: "pageview", 
-        page: location.pathname + location.search 
+      ReactGA.send({
+        hitType: "pageview",
+        page: location.pathname + location.search,
       });
     } else {
       console.warn("⚠️ VITE_GA_MEASUREMENT_ID not found in environment");
     }
   }, []);
 
-  // ✅ ADD THIS useEffect for tracking page views on route changes
+  // ✅ Track page views on route changes
   useEffect(() => {
     const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
     if (measurementId) {
-      ReactGA.send({ 
-        hitType: "pageview", 
-        page: location.pathname + location.search 
+      ReactGA.send({
+        hitType: "pageview",
+        page: location.pathname + location.search,
       });
       console.log("📊 Page view tracked:", location.pathname);
     }
@@ -81,7 +81,7 @@ const App = () => {
       <ToastContainer />
       <Navbar />
       <SearchBar />
-      <ScrollToTop /> 
+      <ScrollToTop />
       <Routes>
         {/* Existing routes */}
         <Route path="/" element={<Home />} />
@@ -99,13 +99,13 @@ const App = () => {
         {/* Company links */}
         <Route path="/delivery" element={<Delivery />} />
         <Route path="/privacy" element={<Privacy />} />
-        
+
         {/* Support links */}
         <Route path="/faq" element={<FAQ />} />
         <Route path="/returns" element={<Returns />} />
         <Route path="/size-guide" element={<SizeGuide />} />
         <Route path="/track-order" element={<TrackOrder />} />
-        
+
         {/* Bottom links */}
         <Route path="/terms" element={<Terms />} />
         <Route path="/cookies" element={<Cookies />} />

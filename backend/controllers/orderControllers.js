@@ -1,6 +1,8 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
+import { notifyAdmins } from "../server.js"; // ✅ Import admin notification function
+import axios from "axios"; // ✅ Add for push notifications
 
 // global variables
 const currency = "GHC";
@@ -8,6 +10,37 @@ const deliveryCharges = 100;
 
 // Gateway Initialize
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+// ✅ Helper function to send push notification to customer
+const sendCustomerPushNotification = async (userId, notificationData) => {
+  try {
+    // Get user's push token
+    const user = await userModel.findById(userId);
+    if (!user?.pushToken) {
+      console.log(
+        `ℹ️ User ${userId} has no push token - skipping notification`,
+      );
+      return;
+    }
+
+    // Send via PushAlert API (you'll need to add PUSHALERT_API_KEY to .env)
+    const response = await axios.post("https://api.pushalert.co/rest/v1/send", {
+      apikey: process.env.PUSHALERT_API_KEY,
+      title: notificationData.title,
+      message: notificationData.message,
+      url: `${process.env.FRONTEND_URL}/orders/${notificationData.orderId}`,
+      icon: `${process.env.FRONTEND_URL}/logo.png`,
+      token: user.pushToken, // Send to specific user
+    });
+
+    console.log(`✅ Push notification sent to user ${userId}:`, response.data);
+  } catch (error) {
+    console.error(
+      `❌ Failed to send push notification to user ${userId}:`,
+      error.message,
+    );
+  }
+};
 
 // placing orders using COD
 const placeOrder = async (req, res) => {
@@ -29,6 +62,24 @@ const placeOrder = async (req, res) => {
     await newOrder.save();
 
     await userModel.findByIdAndUpdate(userId, { cartData: {} });
+
+    // ✅ Send real-time notification to admins
+    notifyAdmins({
+      type: "new_order",
+      orderId: newOrder._id,
+      amount: newOrder.amount,
+      customerName: `${address.firstName} ${address.lastName}`,
+      paymentMethod: "COD",
+      status: "pending",
+    });
+
+    // ✅ Send push notification to customer
+    await sendCustomerPushNotification(userId, {
+      title: "🛒 Order Confirmed!",
+      message: `Your order #${newOrder._id.toString().slice(-8)} has been placed successfully. You'll pay on delivery.`,
+      orderId: newOrder._id,
+    });
+
     res.json({ success: true, message: "Order Placed" });
   } catch (error) {
     console.log(error);
@@ -91,6 +142,23 @@ const placeOrderStripe = async (req, res) => {
       },
     });
 
+    // ✅ Send real-time notification to admins
+    notifyAdmins({
+      type: "new_order",
+      orderId: newOrder._id,
+      amount: newOrder.amount,
+      customerName: `${address.firstName} ${address.lastName}`,
+      paymentMethod: "Stripe",
+      status: "pending_payment",
+    });
+
+    // ✅ Send push notification to customer (payment pending)
+    await sendCustomerPushNotification(userId, {
+      title: "💳 Order Initiated",
+      message: `Your order #${newOrder._id.toString().slice(-8)} has been started. Please complete payment to confirm.`,
+      orderId: newOrder._id,
+    });
+
     res.json({
       success: true,
       session_url: session.url,
@@ -148,6 +216,23 @@ const placeOrderMTN = async (req, res) => {
 
     console.log("✅ MTN Order saved with ID:", newOrder._id);
 
+    // ✅ Send real-time notification to admins
+    notifyAdmins({
+      type: "new_order",
+      orderId: newOrder._id,
+      amount: newOrder.amount,
+      customerName: `${address.firstName} ${address.lastName}`,
+      paymentMethod: "MTN_MOMO",
+      status: "paid",
+    });
+
+    // ✅ Send push notification to customer
+    await sendCustomerPushNotification(userId, {
+      title: "📱 MTN MoMo Payment Successful!",
+      message: `Your order #${newOrder._id.toString().slice(-8)} has been paid and confirmed. Thank you!`,
+      orderId: newOrder._id,
+    });
+
     res.json({
       success: true,
       message: "Order placed successfully with MTN MoMo",
@@ -175,12 +260,39 @@ const verifyStripe = async (req, res) => {
         if (userId) {
           await userModel.findByIdAndUpdate(userId, { cartData: {} });
         }
+
+        // ✅ Send notification that payment was verified
+        notifyAdmins({
+          type: "payment_verified",
+          orderId: updatedOrder._id,
+          amount: updatedOrder.amount,
+          paymentMethod: "Stripe",
+          status: "paid",
+        });
+
+        // ✅ Send push notification to customer
+        await sendCustomerPushNotification(userId, {
+          title: "💳 Payment Successful!",
+          message: `Your order #${updatedOrder._id.toString().slice(-8)} has been paid and confirmed.`,
+          orderId: updatedOrder._id,
+        });
+
         res.json({ success: true, message: "Payment verified successfully" });
       } else {
         res.json({ success: false, message: "Order not found" });
       }
     } else {
       await orderModel.findByIdAndDelete(orderId);
+
+      // ✅ Send push notification about failed payment
+      if (userId) {
+        await sendCustomerPushNotification(userId, {
+          title: "❌ Payment Failed",
+          message: `Your payment was not completed. Please try again.`,
+          orderId: orderId,
+        });
+      }
+
       res.json({ success: false, message: "Payment failed - order cancelled" });
     }
   } catch (error) {
@@ -216,7 +328,42 @@ const userOrders = async (req, res) => {
 const updateStatus = async (req, res) => {
   try {
     const { orderId, status } = req.body;
-    await orderModel.findByIdAndUpdate(orderId, { status });
+    const updatedOrder = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true },
+    );
+
+    if (updatedOrder) {
+      // ✅ Send notification that order status changed
+      notifyAdmins({
+        type: "status_update",
+        orderId: updatedOrder._id,
+        amount: updatedOrder.amount,
+        customerName: `${updatedOrder.address.firstName} ${updatedOrder.address.lastName}`,
+        newStatus: status,
+        oldStatus: updatedOrder.status,
+      });
+
+      // ✅ Send push notification to customer about status update
+      const statusMessages = {
+        "Order Placed": "Your order has been confirmed and is being processed.",
+        Packing: "Your items are being packed and prepared for shipping.",
+        Shipped: "Great news! Your order has been shipped.",
+        "Out for delivery": "Your order is out for delivery today! 🚚",
+        Delivered:
+          "Your order has been delivered. Thank you for shopping with us!",
+      };
+
+      await sendCustomerPushNotification(updatedOrder.userId, {
+        title: `📦 Order Status Update: ${status}`,
+        message:
+          statusMessages[status] ||
+          `Your order status has been updated to: ${status}`,
+        orderId: updatedOrder._id,
+      });
+    }
+
     res.json({ success: true, message: "Status updated" });
   } catch (error) {
     console.log(error);
@@ -227,7 +374,7 @@ const updateStatus = async (req, res) => {
 export {
   placeOrder,
   placeOrderStripe,
-  placeOrderMTN, 
+  placeOrderMTN,
   allOrders,
   userOrders,
   updateStatus,

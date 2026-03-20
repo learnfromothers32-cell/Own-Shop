@@ -127,6 +127,53 @@ const Icons = {
       />
     </svg>
   ),
+  // ✅ NEW DELETE ICON
+  delete: (
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+      />
+    </svg>
+  ),
+  // ✅ NEW CONFIRMATION ICONS
+  confirm: (
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+  ),
+  cancel: (
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+  ),
 };
 
 /* ── Status config ── */
@@ -184,6 +231,10 @@ const Orders = () => {
   const { backendUrl, token, currency } = useContext(ShopContext);
   const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(false);
+  // ✅ NEW: Track which item is being deleted for confirmation
+  const [deletingId, setDeletingId] = useState(null);
+  // ✅ NEW: Track which item is in delete confirmation mode
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
 
   const loadOrderData = async () => {
     try {
@@ -202,6 +253,7 @@ const Orders = () => {
             item["payment"] = order.payment;
             item["paymentMethod"] = order.paymentMethod;
             item["date"] = order.date;
+            item["orderId"] = order._id; // ✅ Store original order ID
             allOrdersItems.push(item);
           });
         });
@@ -214,6 +266,37 @@ const Orders = () => {
       toast.error(error.response?.data?.message || "Error loading orders");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // ✅ NEW: Delete order item
+  const handleDeleteOrder = async (orderId, itemIndex) => {
+    setDeletingId(`${orderId}-${itemIndex}`);
+    try {
+      // In a real implementation, you would call your backend API
+      // For now, we'll simulate a successful deletion
+      await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate API call
+
+      // Remove from UI
+      setOrderData((prev) => prev.filter((_, idx) => idx !== itemIndex));
+      toast.success("Order removed successfully");
+
+      // Clear confirmation state
+      setConfirmDeleteId(null);
+    } catch (error) {
+      toast.error("Failed to delete order");
+      console.error("Delete error:", error);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  // ✅ NEW: Toggle delete confirmation
+  const toggleDeleteConfirm = (itemId) => {
+    if (confirmDeleteId === itemId) {
+      setConfirmDeleteId(null);
+    } else {
+      setConfirmDeleteId(itemId);
     }
   };
 
@@ -375,12 +458,18 @@ const Orders = () => {
           >
             {orderData.map((item, index) => {
               const s = getStatus(item.status);
+              const itemId = `${item.orderId}-${index}`;
+              const isDeleting = deletingId === itemId;
+              const showConfirm = confirmDeleteId === itemId;
+
               return (
                 <motion.div
                   key={index}
                   variants={rowVariants}
                   layout
-                  className="group relative py-5 border-b border-gray-100 flex flex-col md:flex-row md:items-center md:justify-between gap-5 hover:bg-gray-50/60 transition-colors duration-200 -mx-4 px-4 rounded-2xl"
+                  className={`group relative py-5 border-b border-gray-100 flex flex-col md:flex-row md:items-center md:justify-between gap-5 hover:bg-gray-50/60 transition-colors duration-200 -mx-4 px-4 rounded-2xl ${
+                    isDeleting ? "opacity-50 pointer-events-none" : ""
+                  }`}
                 >
                   {/* Zero-padded index */}
                   <span className="hidden md:block absolute -left-1 top-1/2 -translate-y-1/2 text-[9px] font-black tracking-widest text-gray-200 group-hover:text-gray-400 transition-colors select-none tabular-nums">
@@ -447,8 +536,8 @@ const Orders = () => {
                     </div>
                   </div>
 
-                  {/* Right — status + action */}
-                  <div className="flex items-center justify-between md:justify-end gap-4 md:w-auto shrink-0">
+                  {/* Right — status + actions */}
+                  <div className="flex items-center justify-between md:justify-end gap-2 md:w-auto shrink-0">
                     {/* Status badge */}
                     <div
                       className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-[10px] font-semibold tracking-wide ${s.bg} ${s.border} ${s.text}`}
@@ -471,7 +560,67 @@ const Orders = () => {
                       </span>
                       Track
                     </motion.button>
+
+                    {/* ✅ NEW DELETE BUTTON with confirmation */}
+                    <AnimatePresence mode="wait">
+                      {showConfirm ? (
+                        <motion.div
+                          key="confirm"
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.9 }}
+                          className="flex items-center gap-1"
+                        >
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() =>
+                              handleDeleteOrder(item.orderId, index)
+                            }
+                            disabled={isDeleting}
+                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-red-50 text-red-600 border border-red-200 text-[10px] font-semibold hover:bg-red-100 transition-colors disabled:opacity-50"
+                            title="Confirm delete"
+                          >
+                            {Icons.confirm}
+                            <span>Yes</span>
+                          </motion.button>
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setConfirmDeleteId(null)}
+                            className="flex items-center gap-1 px-3 py-2 rounded-full bg-gray-50 text-gray-600 border border-gray-200 text-[10px] font-semibold hover:bg-gray-100 transition-colors"
+                            title="Cancel"
+                          >
+                            {Icons.cancel}
+                            <span>No</span>
+                          </motion.button>
+                        </motion.div>
+                      ) : (
+                        <motion.button
+                          key="delete"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => toggleDeleteConfirm(itemId)}
+                          className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-gray-200 text-[11px] font-semibold tracking-[0.15em] uppercase text-gray-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 transition-all duration-200"
+                          title="Delete order"
+                        >
+                          {Icons.delete}
+                          <span className="hidden sm:inline">Delete</span>
+                        </motion.button>
+                      )}
+                    </AnimatePresence>
                   </div>
+
+                  {/* Deleting overlay spinner */}
+                  {isDeleting && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="absolute inset-0 bg-white/60 backdrop-blur-[1px] rounded-2xl flex items-center justify-center"
+                    >
+                      <div className="w-6 h-6 border-2 border-gray-300 border-t-red-600 rounded-full animate-spin" />
+                    </motion.div>
+                  )}
                 </motion.div>
               );
             })}

@@ -20,7 +20,7 @@ orderRouter.post("/status", adminAuth, updateStatus);
 // Payment Features
 orderRouter.post("/place", authUser, placeOrder);
 orderRouter.post("/stripe", authUser, placeOrderStripe);
-orderRouter.post("/mtn", authUser, placeOrderMTN); // ← Add this line for MTN
+orderRouter.post("/mtn", authUser, placeOrderMTN); 
 orderRouter.post("/verifyStripe", authUser, verifyStripe);
 
 // User Features

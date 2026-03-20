@@ -3,6 +3,7 @@ import axios from "axios";
 import { backendUrl } from "../App";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // ✅ Add this import
 
 /* ── Font Injection ───────────────────────────────────────────────── */
 const injectFonts = () => {
@@ -256,15 +257,30 @@ const ProgressSteps = ({ currentStatus }) => {
 ══════════════════════════════════════════════════════════ */
 const OrderCard = ({ order, updating, onStatusUpdate }) => {
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate(); // ✅ Add navigate hook
   const cfg = STATUS_CONFIG[order.status] || STATUS_CONFIG["Order Placed"];
   const itemCount =
     order.items?.reduce((s, i) => s + (i.quantity || 1), 0) ?? 0;
+
+  // ✅ Handle card click (but not when clicking on dropdown or details button)
+  const handleCardClick = (e) => {
+    // Don't navigate if clicking on select dropdown or details button
+    if (
+      e.target.tagName === "SELECT" ||
+      e.target.closest("select") ||
+      e.target.closest("button")
+    ) {
+      return;
+    }
+    navigate(`/orders/${order._id}`);
+  };
 
   return (
     <motion.div
       variants={cardAnim}
       layout
-      className="group bg-white rounded-2xl border border-slate-200/80 overflow-hidden hover:shadow-[0_12px_40px_rgba(0,0,0,0.07)] transition-all duration-400"
+      onClick={handleCardClick} // ✅ Add click handler
+      className="group bg-white rounded-2xl border border-slate-200/80 overflow-hidden hover:shadow-[0_12px_40px_rgba(0,0,0,0.07)] transition-all duration-400 cursor-pointer"
     >
       {/* ── Colored left accent ── */}
       <div className="flex">
@@ -360,6 +376,7 @@ const OrderCard = ({ order, updating, onStatusUpdate }) => {
                     defaultValue={order.status}
                     className="w-full appearance-none bg-slate-900 text-white text-[11px] font-bold py-2.5 px-4 pr-8 rounded-xl cursor-pointer hover:bg-slate-800 transition-colors outline-none focus:ring-2 focus:ring-slate-900/20"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                    onClick={(e) => e.stopPropagation()} // ✅ Prevent card click
                   >
                     {Object.keys(STATUS_CONFIG).map((s) => (
                       <option key={s} value={s}>
@@ -391,7 +408,10 @@ const OrderCard = ({ order, updating, onStatusUpdate }) => {
 
                 {/* expand details */}
                 <button
-                  onClick={() => setExpanded((p) => !p)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // ✅ Prevent card click
+                    setExpanded((p) => !p);
+                  }}
                   className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border text-[11px] font-bold transition-all duration-200 flex-shrink-0
                     ${
                       expanded
