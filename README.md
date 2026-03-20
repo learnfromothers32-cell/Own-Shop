@@ -16,7 +16,10 @@ A **production-ready full-stack e-commerce platform** built for African markets 
 
 <br/>
 
-[🌐 Live Demo — Store](#) · [📊 Admin Dashboard](#) · [🔗 API Docs](#) · [🐛 Report Bug](#) · [✨ Request Feature](#)
+[🌐 Live Demo — Store](#) · 
+[📊 Admin Dashboard](#) · 
+[🔗 API Docs](#) · [🐛 Report Bug](#) ·
+[✨ Request Feature](#)
 
 </div>
 
